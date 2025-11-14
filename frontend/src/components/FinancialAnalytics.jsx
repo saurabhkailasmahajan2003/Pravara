@@ -1,11 +1,16 @@
 import {
   Area,
   AreaChart,
+  Bar,
+  BarChart,
   CartesianGrid,
   Cell,
   Legend,
+  Line,
+  LineChart,
   Pie,
   PieChart,
+  ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -34,11 +39,11 @@ const incomeBreakdown = [
 ];
 
 const expenseBreakdown = [
-  { name: "Housing", value: 40, color: "#7c3aed" },
-  { name: "Transportation", value: 20, color: "#6366f1" },
-  { name: "Entertainment", value: 13, color: "#ec4899" },
-  { name: "Food", value: 17, color: "#22d3ee" },
-  { name: "Other", value: 10, color: "#fbbf24" },
+  { name: "Housing", value: 40, color: "#A020F0" },
+  { name: "Transportation", value: 25, color: "#D400FF" },
+  { name: "Entertainment", value: 20, color: "#FF00CC" },
+  { name: "Food", value: 10, color: "#A020F0" },
+  { name: "Other", value: 5, color: "#D400FF" },
 ];
 
 const forecastData = [
@@ -53,9 +58,9 @@ const forecastData = [
 ];
 
 const metricCards = [
-  { title: "Total Income", value: 384567.45, change: "+8.7%", tone: "text-emerald-400", chip: "bg-emerald-500/10" },
-  { title: "Total Expenses", value: 328942.6, change: "-6.3%", tone: "text-rose-400", chip: "bg-rose-500/10" },
-  { title: "Net Savings", value: 55624.85, change: "+12.4%", tone: "text-emerald-400", chip: "bg-emerald-500/10" },
+  { title: "Total Income", value: 384567.45, change: "+8.7%", tone: "text-[#A020F0]", chip: "bg-[#A020F0]/20" },
+  { title: "Total Expenses", value: 328942.6, change: "-6.3%", tone: "text-[#FF00CC]", chip: "bg-[#FF00CC]/20" },
+  { title: "Total Net Income", value: 55624.85, change: "+21.4%", tone: "text-[#A020F0]", chip: "bg-[#A020F0]/20" },
 ];
 
 const incomeTotal = incomeBreakdown.reduce((sum, item) => sum + item.value, 0);
@@ -65,64 +70,92 @@ const formatCurrency = (amount) =>
 
 export default function FinancialAnalytics() {
   return (
-    <section className="rounded-3xl border border-slate-800 bg-[#0f111a] text-slate-100 shadow-2xl shadow-black/40">
-      <header className="flex flex-col gap-4 border-b border-slate-800 px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
+    <section className="rounded-3xl card-neon text-white shadow-2xl">
+      <header className="flex flex-col gap-2 border-b border-[#A020F0]/20 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Analytics · Summary</p>
-          <h2 className="mt-2 text-2xl font-semibold text-white sm:text-3xl">Financial analytics</h2>
+          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-[#A0A0A0]">Analytics · Summary</p>
+          <h2 className="mt-1 text-xl font-semibold text-white sm:text-2xl">Financial analytics</h2>
         </div>
-        <div className="flex flex-wrap gap-2 text-xs font-medium text-slate-300">
-          <span className="rounded-full border border-slate-700 px-3 py-1">All accounts</span>
-          <span className="rounded-full border border-slate-700 px-3 py-1">Monthly</span>
-          <span className="rounded-full border border-slate-700 px-3 py-1">2024</span>
+        <div className="flex flex-wrap gap-2 text-[0.65rem] font-medium text-white">
+          <span className="rounded-full glass px-2.5 py-1">All accounts</span>
+          <span className="rounded-full glass px-2.5 py-1">Monthly</span>
+          <span className="rounded-full glass px-2.5 py-1">2024</span>
         </div>
       </header>
 
-      <div className="grid gap-6 px-6 py-6 lg:grid-cols-[2.1fr_0.9fr]">
-        <article className="rounded-2xl border border-slate-800 bg-slate-900/40 p-5 shadow-inner shadow-black/30">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="grid gap-4 px-4 py-4 lg:grid-cols-[2.1fr_0.9fr]">
+        <article className="rounded-2xl glass-card p-4">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col">
-              <h3 className="text-sm font-semibold uppercase tracking-[0.28em] text-slate-400">Cashflow trends</h3>
-              <p className="text-xs text-slate-500">Income vs expenses · Jan - Dec</p>
+              <h3 className="text-xs font-semibold uppercase tracking-[0.28em] text-[#A0A0A0]">Monthly Income & Expenses</h3>
+              <p className="text-[0.65rem] text-[#A0A0A0]">Income vs expenses · Jan - Dec</p>
             </div>
-            <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400">
-              Highlight: May variance
-            </span>
           </div>
-          <div className="mt-6 h-60">
+          <div className="mt-4 h-44">
             <ResponsiveContainer>
-              <AreaChart data={monthlySummary}>
-                <defs>
-                  <linearGradient id="incomeArea" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.9} />
-                    <stop offset="80%" stopColor="#22d3ee" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="expenseArea" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#a855f7" stopOpacity={0.9} />
-                    <stop offset="80%" stopColor="#a855f7" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid stroke="#1e2235" strokeDasharray="3 3" />
-                <XAxis dataKey="month" stroke="#475569" />
-                <YAxis stroke="#475569" tickFormatter={(value) => `₹${value}L`} />
-                <Tooltip
-                  formatter={(value, name) => [`₹${Number(value).toFixed(1)}L`, name]}
-                  contentStyle={{ backgroundColor: "#11131f", borderColor: "#1e2235", borderRadius: "12px" }}
+              <BarChart 
+                data={monthlySummary} 
+                margin={{ top: 5, right: 10, left: 0, bottom: 0 }}
+                barCategoryGap="15%"
+                barGap={8}
+              >
+                <CartesianGrid stroke="rgba(160, 32, 240, 0.2)" strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="month" 
+                  stroke="#A0A0A0" 
+                  tick={{ fill: "#A0A0A0", fontSize: 10 }} 
+                  axisLine={false}
                 />
-                <Legend iconType="circle" wrapperStyle={{ color: "#cbd5f5" }} />
-                <Area type="monotone" dataKey="income" name="Income" stroke="#22d3ee" fill="url(#incomeArea)" strokeWidth={2.5} />
-                <Area type="monotone" dataKey="expense" name="Expense" stroke="#a855f7" fill="url(#expenseArea)" strokeWidth={2.5} />
-              </AreaChart>
+                <YAxis 
+                  stroke="#A0A0A0" 
+                  tick={{ fill: "#A0A0A0", fontSize: 10 }} 
+                  tickFormatter={(value) => `₹${value}L`}
+                  axisLine={false}
+                />
+                <Tooltip
+                  formatter={(value, name) => {
+                    const formattedValue = `₹${Number(value).toFixed(2)}L`;
+                    return [formattedValue, name === "income" ? "Income" : "Expenses"];
+                  }}
+                  labelFormatter={(label) => `${label} 2024`}
+                  contentStyle={{ 
+                    backgroundColor: "rgba(26, 26, 26, 0.95)", 
+                    borderColor: "rgba(160, 32, 240, 0.3)", 
+                    borderRadius: "12px", 
+                    color: "#FFFFFF",
+                    padding: "8px 12px"
+                  }}
+                  itemStyle={{ padding: "4px 0" }}
+                />
+                <Legend 
+                  iconType="circle" 
+                  wrapperStyle={{ color: "#FFFFFF", paddingTop: "5px", fontSize: "12px" }} 
+                />
+                <Bar 
+                  dataKey="income" 
+                  name="Income" 
+                  fill="#A020F0" 
+                  radius={[4, 4, 0, 0]}
+                  style={{ filter: 'drop-shadow(0 0 4px rgba(160, 32, 240, 0.5))' }}
+                />
+                <Bar 
+                  dataKey="expense" 
+                  name="Expenses" 
+                  fill="#FF00CC" 
+                  radius={[4, 4, 0, 0]}
+                  style={{ filter: 'drop-shadow(0 0 4px rgba(255, 0, 204, 0.5))' }}
+                />
+              </BarChart>
             </ResponsiveContainer>
           </div>
         </article>
 
-        <aside className="grid gap-4">
+        <aside className="grid gap-3">
           {metricCards.map((card) => (
-            <div key={card.title} className="rounded-2xl border border-slate-800 bg-slate-900/40 p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-400">{card.title}</p>
-              <p className="mt-3 text-2xl font-semibold text-white">{formatCurrency(card.value)}</p>
-              <span className={`mt-2 inline-flex items-center gap-2 rounded-full ${card.chip} px-3 py-1 text-xs font-semibold ${card.tone}`}>
+            <div key={card.title} className="rounded-2xl glass-card p-4">
+              <p className="text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-[#A0A0A0]">{card.title}</p>
+              <p className="mt-2 text-xl font-semibold text-white">{formatCurrency(card.value)}</p>
+              <span className={`mt-1.5 inline-flex items-center gap-2 rounded-full glass px-2.5 py-1 text-[0.65rem] font-semibold ${card.tone}`}>
                 {card.change}
               </span>
             </div>
@@ -130,38 +163,54 @@ export default function FinancialAnalytics() {
         </aside>
       </div>
 
-      <div className="grid gap-6 border-t border-slate-800 px-6 py-6 lg:grid-cols-3">
-        <article className="rounded-2xl border border-slate-800 bg-slate-900/40 p-5 shadow-inner shadow-black/30">
+      <div className="grid gap-4 border-t border-[#A020F0]/20 px-4 py-4 lg:grid-cols-3">
+        <article className="rounded-2xl glass-card p-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold uppercase tracking-[0.28em] text-slate-400">Income Overview</h3>
-            <span className="rounded-full border border-slate-700 px-3 py-1 text-[0.65rem] uppercase tracking-[0.25em] text-slate-400">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.28em] text-[#A0A0A0]">Income Overview</h3>
+            <span className="rounded-full glass px-2.5 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-[#A0A0A0]">
               Categories
             </span>
           </div>
-          <p className="mt-6 text-3xl font-semibold text-white">{formatCurrency(incomeTotal)}</p>
-          <div className="mt-6 space-y-3 text-sm text-slate-300">
-            {incomeBreakdown.map((item) => (
-              <div key={item.label} className="flex items-center justify-between">
-                <span>{item.label}</span>
-                <span className="font-semibold text-white">{formatCurrency(item.value)}</span>
-              </div>
-            ))}
+          <p className="mt-3 text-xl font-semibold text-white">{formatCurrency(incomeTotal)}</p>
+          <div className="mt-3 space-y-2.5">
+            {incomeBreakdown.map((item, index) => {
+              const percentage = Math.round((item.value / incomeTotal) * 100);
+              const colors = ["#A020F0", "#D400FF", "#FF00CC"];
+              return (
+                <div key={item.label} className="space-y-1.5">
+                  <div className="flex items-center justify-between text-xs text-white">
+                    <span className="font-medium">{item.label}</span>
+                    <span className="font-semibold text-[0.65rem]">{formatCurrency(item.value)} ({percentage}%)</span>
+                  </div>
+                  <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all duration-500"
+                      style={{
+                        width: `${percentage}%`,
+                        backgroundColor: colors[index % colors.length],
+                        boxShadow: `0 0 10px ${colors[index % colors.length]}40`,
+                      }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </article>
 
-        <article className="rounded-2xl border border-slate-800 bg-slate-900/40 p-5 shadow-inner shadow-black/30">
+        <article className="rounded-2xl glass-card p-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold uppercase tracking-[0.28em] text-slate-400">Expense Analysis</h3>
-            <span className="rounded-full border border-slate-700 px-3 py-1 text-[0.65rem] uppercase tracking-[0.25em] text-slate-400">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.28em] text-[#A0A0A0]">Expense Analysis</h3>
+            <span className="rounded-full glass px-2.5 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-[#A0A0A0]">
               Transactions
             </span>
           </div>
-          <div className="mt-6 h-48">
+          <div className="mt-4 h-36">
             <ResponsiveContainer>
               <PieChart>
                 <Tooltip
                   formatter={(value, name) => [`${value}%`, name]}
-                  contentStyle={{ backgroundColor: "#11131f", borderColor: "#1e2235", borderRadius: "12px" }}
+                  contentStyle={{ backgroundColor: "rgba(26, 26, 26, 0.95)", borderColor: "rgba(160, 32, 240, 0.3)", borderRadius: "12px", color: "#FFFFFF" }}
                 />
                 <Pie
                   data={expenseBreakdown}
@@ -177,16 +226,13 @@ export default function FinancialAnalytics() {
                     <Cell key={entry.name} fill={entry.color} />
                   ))}
                 </Pie>
-                <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fill="#cbd5f5" fontSize="24" fontWeight="600">
-                  {expenseTotalTransactions}
-                </text>
-                <text x="50%" y="50%" dy="24" dominantBaseline="middle" textAnchor="middle" fill="#94a3b8" fontSize="12">
-                  Bills
+                <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fill="#FFFFFF" fontSize="18" fontWeight="600">
+                  {expenseTotalTransactions} Total
                 </text>
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <div className="mt-6 grid gap-2 text-xs text-slate-300">
+          <div className="mt-4 grid gap-1.5 text-[0.65rem] text-white">
             {expenseBreakdown.map((item) => (
               <div key={item.name} className="flex items-center justify-between">
                 <span className="inline-flex items-center gap-2">
@@ -199,41 +245,96 @@ export default function FinancialAnalytics() {
           </div>
         </article>
 
-        <article className="rounded-2xl border border-slate-800 bg-slate-900/40 p-5 shadow-inner shadow-black/30">
+        <article className="rounded-2xl glass-card p-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold uppercase tracking-[0.28em] text-slate-400">Financial Forecast</h3>
-            <span className="rounded-full border border-slate-700 px-3 py-1 text-[0.65rem] uppercase tracking-[0.25em] text-slate-400">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.28em] text-[#A0A0A0]">Financial Forecast</h3>
+            <span className="rounded-full glass px-2.5 py-1 text-[0.6rem] uppercase tracking-[0.25em] text-[#A0A0A0]">
               May focus
             </span>
           </div>
-          <div className="mt-6 h-48">
+          <div className="mt-4 h-36">
             <ResponsiveContainer>
-              <AreaChart data={forecastData}>
+              <LineChart data={forecastData} margin={{ top: 5, right: 5, left: -10, bottom: 0 }}>
                 <defs>
-                  <linearGradient id="forecastIncome" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.8} />
-                    <stop offset="90%" stopColor="#22d3ee" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="forecastExpense" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#f97316" stopOpacity={0.8} />
-                    <stop offset="90%" stopColor="#f97316" stopOpacity={0} />
+                  <linearGradient id="forecastGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#A020F0" stopOpacity={0.3} />
+                    <stop offset="100%" stopColor="#FF00CC" stopOpacity={0.1} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid stroke="#1e2235" strokeDasharray="3 3" />
-                <XAxis dataKey="month" stroke="#475569" />
-                <YAxis stroke="#475569" tickFormatter={(value) => `₹${value}L`} />
-                <Tooltip
-                  formatter={(value, name) => [`₹${Number(value).toFixed(1)}L`, name]}
-                  contentStyle={{ backgroundColor: "#11131f", borderColor: "#1e2235", borderRadius: "12px" }}
+                <CartesianGrid stroke="rgba(160, 32, 240, 0.2)" strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="month" 
+                  stroke="#A0A0A0" 
+                  tick={{ fill: "#A0A0A0", fontSize: 10 }} 
+                  axisLine={false}
                 />
-                <Legend iconType="circle" wrapperStyle={{ color: "#cbd5f5" }} />
-                <Area type="monotone" dataKey="income" name="Income" stroke="#22d3ee" fill="url(#forecastIncome)" strokeWidth={2.5} />
-                <Area type="monotone" dataKey="expense" name="Expense" stroke="#f97316" fill="url(#forecastExpense)" strokeWidth={2.5} />
-              </AreaChart>
+                <YAxis 
+                  stroke="#A0A0A0" 
+                  tick={{ fill: "#A0A0A0", fontSize: 10 }} 
+                  tickFormatter={(value) => `₹${value}L`}
+                  axisLine={false}
+                />
+                <Tooltip
+                  formatter={(value, name) => [`₹${Number(value).toFixed(1)}L`, name === "income" ? "Income" : "Expenses"]}
+                  contentStyle={{ 
+                    backgroundColor: "rgba(26, 26, 26, 0.95)", 
+                    borderColor: "rgba(160, 32, 240, 0.3)", 
+                    borderRadius: "12px", 
+                    color: "#FFFFFF",
+                    padding: "8px 12px"
+                  }}
+                  itemStyle={{ padding: "4px 0" }}
+                />
+                <Legend 
+                  iconType="line" 
+                  wrapperStyle={{ color: "#FFFFFF", fontSize: "12px", paddingTop: "5px" }} 
+                />
+                <ReferenceLine 
+                  x="May" 
+                  stroke="#A0A0A0" 
+                  strokeWidth={1.5} 
+                  strokeDasharray="3 3"
+                  label={{ 
+                    value: "May", 
+                    position: "top", 
+                    fill: "#FFFFFF",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    backgroundColor: "rgba(26, 26, 26, 0.8)",
+                    padding: "4px 8px",
+                    borderRadius: "6px"
+                  }}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="income"
+                  stroke="none"
+                  fill="url(#forecastGradient)"
+                  fillOpacity={0.3}
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="income" 
+                  name="Income" 
+                  stroke="#A020F0" 
+                  strokeWidth={3}
+                  dot={{ fill: "#A020F0", r: 4, strokeWidth: 2, stroke: "#000000" }}
+                  activeDot={{ r: 6, fill: "#A020F0" }}
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="expense" 
+                  name="Expenses" 
+                  stroke="#FF00CC" 
+                  strokeWidth={3}
+                  dot={{ fill: "#FF00CC", r: 4, strokeWidth: 2, stroke: "#000000" }}
+                  activeDot={{ r: 6, fill: "#FF00CC" }}
+                />
+              </LineChart>
             </ResponsiveContainer>
           </div>
-          <p className="mt-5 text-xs text-slate-400">
-            Expecting deficit in May. Consider cutting leisure expenses or delaying non-essential purchases to maintain momentum.
+          <p className="mt-3 text-[0.65rem] text-[#A0A0A0] leading-relaxed">
+            Expecting deficit in May. Consider saving more in April or optimizing leisure expenses.
           </p>
         </article>
       </div>

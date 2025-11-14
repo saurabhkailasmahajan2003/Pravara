@@ -4,9 +4,9 @@ import FinancialAnalyticsPanel from "../components/FinancialAnalytics.jsx";
 
 export default function FinancialAnalytics() {
   return (
-    <div className="flex min-h-screen flex-col bg-slate-900/10">
+    <div className="flex min-h-screen flex-col bg-[#000000]">
       <Navbar />
-      <main className="mx-auto w-full max-w-screen-2xl flex-1 px-4 py-10 sm:px-6 lg:px-10 xl:px-16">
+      <main className="mx-auto w-full max-w-screen-2xl flex-1 px-4 py-4 sm:px-6 lg:px-8 xl:px-12">
         <FinancialAnalyticsPanel />
       </main>
       <Footer />

@@ -1,1 +1,314 @@
 @import "tailwindcss";
+
+/* ============================================
+   NEON FUTURISTIC THEME - COLOR PALETTE
+   ============================================ */
+@theme {
+  /* Primary Colors */
+  --color-primary: #A020F0; /* Vibrant Purple */
+  --color-secondary: #FF00CC; /* Hot Pink */
+  --color-accent: #D400FF; /* Magenta */
+  
+  /* Gradient Colors */
+  --color-gradient-start: #A020F0; /* Vibrant Purple */
+  --color-gradient-end: #FF00CC; /* Hot Pink */
+  --color-gradient-mid: #D400FF; /* Magenta */
+  
+  /* Background Colors */
+  --color-bg-primary: #000000; /* Deep Black */
+  --color-bg-secondary: #0A0A0A; /* Charcoal Gray */
+  --color-bg-tertiary: #1A1A1A; /* Slightly lighter for cards */
+  
+  /* Text Colors */
+  --color-text-primary: #FFFFFF; /* White */
+  --color-text-secondary: #E5E5E5; /* Soft Gray */
+  --color-text-muted: #A0A0A0; /* Muted Gray */
+  
+  /* Neon Glow Colors */
+  --color-glow-purple: #A020F0;
+  --color-glow-pink: #FF00CC;
+  --color-glow-magenta: #D400FF;
+  
+  /* Glassmorphism Colors */
+  --color-glass-bg: rgba(255, 255, 255, 0.05);
+  --color-glass-border: rgba(160, 32, 240, 0.2);
+  --color-glass-border-hover: rgba(160, 32, 240, 0.4);
+}
+
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
+* {
+  @apply antialiased;
+}
+
+body {
+  @apply bg-bg-primary text-text-primary;
+  background: linear-gradient(135deg, #000000 0%, #0A0A0A 100%);
+  min-height: 100vh;
+}
+
+/* ============================================
+   NEON GLOW UTILITIES
+   ============================================ */
+.neon-glow-purple {
+  box-shadow: 
+    0 0 10px rgba(160, 32, 240, 0.5),
+    0 0 20px rgba(160, 32, 240, 0.3),
+    0 0 30px rgba(160, 32, 240, 0.2),
+    inset 0 0 10px rgba(160, 32, 240, 0.1);
+}
+
+.neon-glow-pink {
+  box-shadow: 
+    0 0 10px rgba(255, 0, 204, 0.5),
+    0 0 20px rgba(255, 0, 204, 0.3),
+    0 0 30px rgba(255, 0, 204, 0.2),
+    inset 0 0 10px rgba(255, 0, 204, 0.1);
+}
+
+.neon-glow-magenta {
+  box-shadow: 
+    0 0 10px rgba(212, 0, 255, 0.5),
+    0 0 20px rgba(212, 0, 255, 0.3),
+    0 0 30px rgba(212, 0, 255, 0.2),
+    inset 0 0 10px rgba(212, 0, 255, 0.1);
+}
+
+.neon-glow-gradient {
+  box-shadow: 
+    0 0 20px rgba(160, 32, 240, 0.4),
+    0 0 40px rgba(255, 0, 204, 0.3),
+    0 0 60px rgba(212, 0, 255, 0.2),
+    inset 0 0 20px rgba(160, 32, 240, 0.1);
+}
+
+.neon-glow-strong {
+  box-shadow: 
+    0 0 20px rgba(160, 32, 240, 0.6),
+    0 0 40px rgba(255, 0, 204, 0.5),
+    0 0 60px rgba(212, 0, 255, 0.4),
+    0 0 80px rgba(160, 32, 240, 0.2);
+}
+
+.neon-glow-text {
+  text-shadow: 
+    0 0 10px rgba(160, 32, 240, 0.8),
+    0 0 20px rgba(255, 0, 204, 0.6),
+    0 0 30px rgba(212, 0, 255, 0.4);
+}
+
+/* ============================================
+   GRADIENT BACKGROUND UTILITIES
+   ============================================ */
+.bg-neon-gradient {
+  background: linear-gradient(135deg, #A020F0 0%, #D400FF 50%, #FF00CC 100%);
+}
+
+.bg-neon-gradient-radial {
+  background: radial-gradient(circle at center, rgba(160, 32, 240, 0.3) 0%, rgba(0, 0, 0, 0.8) 70%);
+}
+
+.bg-neon-gradient-blur {
+  background: linear-gradient(135deg, rgba(160, 32, 240, 0.2) 0%, rgba(212, 0, 255, 0.15) 50%, rgba(255, 0, 204, 0.2) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.bg-neon-gradient-vertical {
+  background: linear-gradient(180deg, #A020F0 0%, #D400FF 50%, #FF00CC 100%);
+}
+
+.bg-neon-gradient-horizontal {
+  background: linear-gradient(90deg, #A020F0 0%, #D400FF 50%, #FF00CC 100%);
+}
+
+/* ============================================
+   GLASSMORPHISM UTILITIES
+   ============================================ */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(160, 32, 240, 0.2);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(160, 32, 240, 0.3);
+}
+
+.glass-hover {
+  transition: all 0.3s ease;
+}
+
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(160, 32, 240, 0.5);
+  box-shadow: 
+    0 0 20px rgba(160, 32, 240, 0.3),
+    0 0 40px rgba(255, 0, 204, 0.2);
+}
+
+.glass-card {
+  background: rgba(26, 26, 26, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(160, 32, 240, 0.2);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 0 20px rgba(160, 32, 240, 0.05);
+}
+
+/* ============================================
+   ANIMATION UTILITIES
+   ============================================ */
+@keyframes neon-pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 
+      0 0 10px rgba(160, 32, 240, 0.5),
+      0 0 20px rgba(160, 32, 240, 0.3),
+      0 0 30px rgba(160, 32, 240, 0.2);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 
+      0 0 20px rgba(160, 32, 240, 0.7),
+      0 0 40px rgba(255, 0, 204, 0.5),
+      0 0 60px rgba(212, 0, 255, 0.3);
+  }
+}
+
+.animate-neon-pulse {
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* ============================================
+   BUTTON STYLES
+   ============================================ */
+.btn-neon-primary {
+  @apply relative overflow-hidden rounded-full px-6 py-3 font-semibold text-white transition-all duration-300;
+  background: linear-gradient(135deg, #A020F0 0%, #D400FF 50%, #FF00CC 100%);
+  box-shadow: 
+    0 0 20px rgba(160, 32, 240, 0.4),
+    0 0 40px rgba(255, 0, 204, 0.3),
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.btn-neon-primary:hover {
+  box-shadow: 
+    0 0 30px rgba(160, 32, 240, 0.6),
+    0 0 60px rgba(255, 0, 204, 0.5),
+    0 0 80px rgba(212, 0, 255, 0.3),
+    inset 0 0 30px rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.btn-neon-primary:active {
+  transform: translateY(0);
+}
+
+.btn-neon-outline {
+  @apply relative overflow-hidden rounded-full border-2 px-6 py-3 font-semibold text-white transition-all duration-300;
+  border-color: #A020F0;
+  background: rgba(160, 32, 240, 0.05);
+  box-shadow: 
+    0 0 10px rgba(160, 32, 240, 0.3),
+    inset 0 0 10px rgba(160, 32, 240, 0.1);
+}
+
+.btn-neon-outline:hover {
+  border-color: #FF00CC;
+  background: rgba(255, 0, 204, 0.1);
+  box-shadow: 
+    0 0 20px rgba(160, 32, 240, 0.5),
+    0 0 40px rgba(255, 0, 204, 0.3),
+    inset 0 0 20px rgba(255, 0, 204, 0.15);
+  transform: translateY(-2px);
+}
+
+.btn-neon-outline:active {
+  transform: translateY(0);
+}
+
+/* ============================================
+   CARD STYLES
+   ============================================ */
+.card-neon {
+  @apply relative overflow-hidden rounded-3xl p-6 transition-all duration-300;
+  background: rgba(26, 26, 26, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(160, 32, 240, 0.2);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 0 20px rgba(160, 32, 240, 0.05);
+}
+
+.card-neon:hover {
+  border-color: rgba(160, 32, 240, 0.4);
+  box-shadow: 
+    0 12px 48px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(160, 32, 240, 0.3),
+    inset 0 0 30px rgba(160, 32, 240, 0.1);
+  transform: translateY(-4px);
+}
+
+.card-neon-gradient {
+  @apply relative overflow-hidden rounded-3xl p-6 text-white transition-all duration-300;
+  background: linear-gradient(135deg, rgba(160, 32, 240, 0.3) 0%, rgba(212, 0, 255, 0.2) 50%, rgba(255, 0, 204, 0.3) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(160, 32, 240, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(160, 32, 240, 0.2),
+    inset 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+.card-neon-gradient:hover {
+  box-shadow: 
+    0 12px 48px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(160, 32, 240, 0.4),
+    0 0 60px rgba(255, 0, 204, 0.3),
+    inset 0 0 30px rgba(255, 255, 255, 0.1);
+  transform: translateY(-4px);
+}
+
+/* ============================================
+   TEXT GRADIENT UTILITIES
+   ============================================ */
+.text-neon-gradient {
+  background: linear-gradient(135deg, #A020F0 0%, #D400FF 50%, #FF00CC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-neon-glow {
+  color: #FFFFFF;
+  text-shadow: 
+    0 0 10px rgba(160, 32, 240, 0.8),
+    0 0 20px rgba(255, 0, 204, 0.6),
+    0 0 30px rgba(212, 0, 255, 0.4);
+}
