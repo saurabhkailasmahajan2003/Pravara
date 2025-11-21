@@ -17,7 +17,7 @@ export default function OwnerLayout() {
             <div className="px-3 py-2 mb-2 flex items-center gap-2">
               <div className="h-7 w-7 rounded bg-emerald-600" />
               <span className="text-sm font-semibold tracking-wide">
-                TEAM<span className="text-emerald-600">GROWTH</span>
+                Pravara <span className="text-emerald-600">HealthCare</span>
               </span>
             </div>
             <SideItem to="/owner/dashboard" icon={<LayoutDashboard size={18} />} label="Dashboard" />
