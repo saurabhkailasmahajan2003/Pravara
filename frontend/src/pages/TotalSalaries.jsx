@@ -1,88 +1,5 @@
-import { NavLink } from 'react-router-dom'
-import { useState } from 'react'; // Added to make it a proper React functional component, though not strictly needed here
-
-// --- Placeholder for Navbar (Since it was imported) ---
-function Navbar() {
-  return (
-    <nav className="border-b border-gray-200 bg-white shadow-sm">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <span className="text-xl font-bold text-[#2B2B2B]">PH CRM</span>
-            </div>
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              <NavLink to="/" className="text-sm font-medium text-[#525252] hover:text-[#2B2B2B] py-2">Dashboard</NavLink>
-              <NavLink to="/total-salaries" className="text-sm font-medium text-[#2B2B2B] border-b-2 border-[#2B2B2B] py-2">Salaries</NavLink>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-  );
-}
-
-// --- Placeholder for Footer (Uses dark mode for contrast) ---
-function Footer() {
-  const BG_MAIN = "bg-[#0A0A0A]"; // Deep black background
-  const BG_ACCENT = "bg-[#171717]"; // Dark gray for secondary background (bottom bar, contact box)
-  const TEXT_PRIMARY = "text-white";
-  const TEXT_MUTED = "text-[#A3A3A3]"; // Light gray for secondary text
-  const BORDER_DARK = "border-[#262626]"; // Dark gray for borders
-
-  return (
-    <footer className={`mt-auto border-t ${BORDER_DARK} ${BG_MAIN} ${TEXT_MUTED}`}>
-      <div className="mx-auto grid max-w-screen-2xl gap-10 px-4 py-12 sm:gap-12 sm:px-6 lg:grid-cols-4 xl:px-16">
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#2B2B2B] text-white shadow-md">
-              <span className="text-base font-bold">PH</span>
-            </div>
-            <div>
-              <p className={`text-sm font-bold ${TEXT_PRIMARY}`}>Pravara Health Care</p>
-              <p className={`text-[0.65rem] font-bold uppercase tracking-wider ${TEXT_MUTED}`}>Employee CRM</p>
-            </div>
-          </div>
-          <p className={`max-w-xs text-sm ${TEXT_MUTED}`}>
-            Empowering Pravara Health Care teams with real-time employee intelligence, payroll transparency, and operational alignment.
-          </p>
-        </div>
-        <div className="space-y-3">
-          <h3 className={`text-xs font-bold uppercase tracking-wider ${TEXT_PRIMARY}`}>Quick Links</h3>
-          <ul className="space-y-2 text-sm">
-            {['Dashboard', 'Employees', 'Payroll'].map((label) => (
-              <li key={label}>
-                <a href="#" className={`${TEXT_MUTED} hover:${TEXT_PRIMARY} hover:underline`}>{label}</a>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="space-y-3">
-          <h3 className={`text-xs font-bold uppercase tracking-wider ${TEXT_PRIMARY}`}>Policies</h3>
-          <ul className="space-y-2 text-sm">
-            {['Privacy', 'Terms', 'Data'].map((label) => (
-              <li key={label}>
-                <a href="#" className={`${TEXT_MUTED} hover:${TEXT_PRIMARY} hover:underline`}>{label}</a>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="space-y-3">
-          <h3 className={`text-xs font-bold uppercase tracking-wider ${TEXT_PRIMARY}`}>Contact</h3>
-          <div className={`rounded-lg border ${BORDER_DARK} ${BG_ACCENT} p-3`}>
-            <a href="mailto:support@phc.in" className={`text-sm font-bold ${TEXT_PRIMARY} hover:underline`}>support@phc.in</a>
-            <p className={`text-xs ${TEXT_MUTED}`}>+91 1800-123-4521</p>
-          </div>
-        </div>
-      </div>
-      <div className={`border-t ${BORDER_DARK} ${BG_ACCENT}`}>
-        <div className={`mx-auto flex max-w-screen-2xl flex-col items-center gap-3 px-4 py-4 text-xs ${TEXT_MUTED} sm:flex-row sm:justify-between sm:px-6 xl:px-16`}>
-          <p>© {new Date().getFullYear()} Pravara Health Care.</p>
-        </div>
-      </div>
-    </footer>
-  )
-}
+import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
 
 // --- TotalSalaries Component ---
 
@@ -204,11 +121,8 @@ export default function TotalSalaries() {
   const BUTTON_SECONDARY = "border border-[#D4D4D4] bg-white text-[#2B2B2B] shadow-sm transition hover:bg-[#F9FAFB]";
 
   return (
-    <div className={`flex min-h-screen flex-col ${BG_PAGE}`}>
-      <Navbar />
-
-      <main className="mx-auto flex w-full max-w-7xl grow flex-col gap-6 px-4 py-8 sm:gap-8 sm:px-6 sm:py-10">
-        
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <main className="flex-1 p-6">
         {/* --- Header Section --- */}
         <section className={`rounded-xl border ${BORDER_LIGHT} ${BG_CARD} px-5 py-8 shadow-md sm:px-8 sm:py-10`}>
           <div className="grid gap-6 lg:grid-cols-[1.25fr_1fr] lg:items-start">
@@ -338,7 +252,6 @@ export default function TotalSalaries() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   )
 }

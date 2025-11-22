@@ -98,8 +98,8 @@ export default function Footer() {
                   to={link.href}
                   className={({ isActive }) =>
                     isActive
-                      ? `font-semibold ${TEXT_PRIMARY}` // Active link is white
-                      : `${TEXT_MUTED} hover:${TEXT_PRIMARY} hover:underline` // Inactive links are light gray, hover to white
+                      ? `font-semibold text-white` // Active link is white
+                      : `text-[#A3A3A3] hover:text-white hover:underline` // Inactive links are light gray, hover to white
                   }
                 >
                   {link.label}
@@ -117,7 +117,7 @@ export default function Footer() {
               <li key={link.label}>
                 <a
                   href={link.href}
-                  className={`${TEXT_MUTED} hover:${TEXT_PRIMARY} hover:underline`}
+                  className={`${TEXT_MUTED} hover:text-gray-900 hover:underline`}
                 >
                   {link.label}
                 </a>
@@ -152,11 +152,11 @@ export default function Footer() {
       {/* Bottom bar uses the accent dark gray background */}
       <div className={`border-t ${BORDER_DARK} ${BG_ACCENT}`}>
         <div className={`mx-auto flex max-w-screen-2xl flex-col items-center gap-3 px-4 py-6 text-xs ${TEXT_MUTED} sm:flex-row sm:justify-between sm:px-6 xl:px-16`}>
-          <p>© {new Date().getFullYear()} Pravara Health Care. All rights reserved.</p>
+          <p> {new Date().getFullYear()} Pravara Health Care. All rights reserved.</p>
           <div className="flex gap-4">
-            <a href="#" className={`hover:${TEXT_PRIMARY} hover:underline`}>Support Portal</a>
-            <a href="#" className={`hover:${TEXT_PRIMARY} hover:underline`}>Status</a>
-            <a href="#" className={`hover:${TEXT_PRIMARY} hover:underline`}>Accessibility</a>
+            <a href="#" className="hover:text-white hover:underline">Support Portal</a>
+            <a href="#" className="hover:text-white hover:underline">Status</a>
+            <a href="#" className="hover:text-white hover:underline">Accessibility</a>
           </div>
         </div>
       </div>

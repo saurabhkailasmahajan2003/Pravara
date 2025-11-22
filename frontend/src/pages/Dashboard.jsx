@@ -1,22 +1,6 @@
 import React from 'react';
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
-// Placeholder components to make the code runnable
-const Navbar = () => (
-  <nav className="border-b border-gray-200 bg-white px-4 py-3">
-    <div className="flex items-center justify-between">
-      <div className="font-bold text-xl">Brand</div>
-      <div className="text-sm text-gray-500">Navbar Placeholder</div>
-    </div>
-  </nav>
-);
-
-const Footer = () => (
-  <footer className="mt-auto border-t border-gray-200 bg-white px-4 py-6 text-center text-sm text-gray-500">
-    Footer Placeholder
-  </footer>
-);
-
 // Theme Palette for JS usage (Charts)
 const THEME = {
   primary: "#2B2B2B",   // Dark Charcoal
@@ -158,7 +142,6 @@ const retentionLegend = [
 export default function App() {
   return (
     <div className="flex min-h-screen flex-col bg-gray-50 text-gray-900 font-sans">
-      <Navbar />
       <main className="flex grow">
         <div className="flex w-full flex-col gap-8 px-4 py-8 sm:px-8 lg:px-12 xl:px-16 max-w-[1600px] mx-auto">
           
@@ -475,7 +458,6 @@ export default function App() {
           </section>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

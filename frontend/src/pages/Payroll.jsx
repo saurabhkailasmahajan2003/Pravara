@@ -1,28 +1,5 @@
 import React from 'react';
-
-// --- Mocks for standalone preview ---
-const Navbar = () => (
-  <nav className="border-b border-gray-200 bg-white px-4 py-3">
-    <div className="flex items-center justify-between">
-      <div className="font-bold text-xl">Brand</div>
-      <div className="text-sm text-gray-500">Navbar Placeholder</div>
-    </div>
-  </nav>
-);
-
-const Footer = () => (
-  <footer className="mt-auto border-t border-gray-200 bg-white px-4 py-6 text-center text-sm text-gray-500">
-    Footer Placeholder
-  </footer>
-);
-
-// Mock NavLink to prevent Router errors in preview
-const NavLink = ({ children, className }) => (
-  <a href="#" className={className} onClick={(e) => e.preventDefault()}>
-    {children}
-  </a>
-);
-// ------------------------------------
+import { NavLink } from 'react-router-dom';
 
 const payrollData = [
   {
@@ -101,11 +78,8 @@ const highestMonthly = payrollData.reduce(
 
 export default function Payroll() {
   return (
-    // Page Background: Light Gray
-    <div className="flex min-h-screen flex-col bg-[#F9FAFB]">
-      <Navbar />
-
-      <main className="mx-auto flex w-full max-w-7xl grow flex-col gap-6 px-4 py-8 sm:gap-8 sm:px-6 sm:py-10">
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <main className="flex-1 p-6">
         
         {/* --- Header Section --- */}
         <section className="rounded-xl border border-[#D4D4D4] bg-white px-5 py-8 shadow-sm sm:px-8 sm:py-10">
@@ -227,7 +201,6 @@ export default function Payroll() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   )
 }

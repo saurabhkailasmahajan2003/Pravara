@@ -1,5 +1,3 @@
-import Navbar from "../components/Navbar.jsx";
-import Footer from "../components/Footer.jsx";
 import {
   Cell,
   Funnel,
@@ -177,10 +175,8 @@ const highlightCards = [
 export default function Dashboard() {
   return (
     // Page Background: Light Gray for contrast against white cards
-    <div className="flex min-h-screen flex-col bg-[#F9FAFB]">
-      <Navbar />
-      
-      <main className="mx-auto w-full max-w-screen-2xl grow px-4 py-8 sm:px-6 lg:px-10 xl:px-16">
+    <div className="min-h-screen bg-gray-50">
+      <main className="container mx-auto px-4 py-8">
         
         {/* Main Container: Clean white background, professional shadow/border */}
         <div className="flex flex-col gap-8 rounded-xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-8 xl:p-12">
@@ -428,7 +424,6 @@ export default function Dashboard() {
           </p>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }
