@@ -27,6 +27,7 @@ import {
 import {
   Activity,
   TrendingUp,
+  Menu
 } from 'lucide-react';
 
 // --- Theme & Colors ---
@@ -197,37 +198,17 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-[#F9FAFB] font-sans pb-12 text-[#2B2B2B]">
       {/* --- Header --- */}
-      <header className="sticky top-0 z-20 border-b border-[#E5E7EB] bg-white/80 backdrop-blur-md px-6 py-4">
-        <div className="max-w-[1800px] mx-auto flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            {/* <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#2B2B2B] text-white">
-                <TrendingUp size={18} />
-              </div>
-              
-            </div> */}
-            <p className="mt-1 text-xs font-medium text-[#737373]">Executive Financial Analytics · FY 2025-2026</p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {['Consolidated', 'Entities', 'Forecasting'].map((filter) => (
-              <button key={filter} className="rounded-md border border-[#E5E7EB] bg-white px-3 py-1.5 text-xs font-bold text-[#525252] transition-colors hover:border-[#2B2B2B] hover:text-[#2B2B2B]">
-                {filter}
-              </button>
-            ))}
-            <button className="rounded-md bg-[#2B2B2B] px-4 py-1.5 text-xs font-bold text-white shadow-sm hover:bg-black">
-              Export Report
-            </button>
-          </div>
-        </div>
+      <header className="sticky top-0 z-20 border-b border-[#E5E7EB] bg-white/80 backdrop-blur-md px-4 py-4 sm:px-6">
+        
       </header>
 
       <main className="max-w-[1800px] mx-auto grid gap-6 px-4 py-8 sm:px-6 lg:px-8">
         
         {/* SECTION 1: Summary & Main Metrics */}
-        <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-[2fr_1fr]">
           
           {/* Main Bar Chart */}
-          <Card title="Monthly Cash Flow" subtitle="Income vs Expenses Comparison" className="lg:row-span-2 h-[400px] lg:h-auto">
+          <Card title="Monthly Cash Flow" subtitle="Income vs Expenses" className="lg:row-span-2 h-[400px] lg:h-auto min-h-[400px]">
             <div className="h-full w-full">
               <ResponsiveContainer>
                 <BarChart data={monthlySummary} margin={{ top: 20, right: 0, left: -15, bottom: 0 }} barGap={6}>
@@ -249,7 +230,6 @@ export default function Dashboard() {
                     contentStyle={{ backgroundColor: "#FFFFFF", borderColor: "#E5E7EB", borderRadius: "8px", boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)" }}
                   />
                   <Legend wrapperStyle={{ paddingTop: "20px", fontSize: "12px" }} iconType="circle" />
-                  {/* Increased Bar Size for Better Visibility */}
                   <Bar dataKey="income" name="Income" fill={COLORS.primary} radius={[4, 4, 0, 0]} barSize={20} />
                   <Bar dataKey="expense" name="Expenses" fill={COLORS.light} radius={[4, 4, 0, 0]} barSize={20} />
                 </BarChart>
@@ -258,7 +238,7 @@ export default function Dashboard() {
           </Card>
 
           {/* Metric Cards */}
-          <div className="grid gap-4">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-3 lg:grid-cols-1">
             {metricCards.map((card) => (
               <div key={card.title} className="flex flex-col justify-center rounded-lg border border-[#E5E7EB] bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
                 <div className="flex items-center justify-between">
@@ -276,7 +256,7 @@ export default function Dashboard() {
           </div>
 
            {/* Radial Gauge */}
-           <div className="rounded-lg border border-[#E5E7EB] bg-white p-5 shadow-sm flex items-center justify-between relative overflow-hidden">
+           <div className="rounded-lg border border-[#E5E7EB] bg-white p-5 shadow-sm flex items-center justify-between relative overflow-hidden min-h-[140px]">
              <div className="z-10">
                <p className="text-[0.65rem] font-bold uppercase tracking-wider text-[#737373]">Financial Health</p>
                <h3 className="text-3xl font-bold text-[#2B2B2B] mt-2">78<span className="text-base text-[#A3A3A3]">/100</span></h3>
@@ -293,34 +273,39 @@ export default function Dashboard() {
         </div>
 
         {/* SECTION 2: Detail Breakdown */}
-        <div className="grid gap-6 lg:grid-cols-2">
-          <Card title="Income Overview" subtitle="Revenue Sources Breakdown">
-            <p className="text-2xl font-bold text-[#2B2B2B]">{formatCurrency(incomeTotal)}</p>
-            <div className="mt-6 space-y-5">
-              {incomeBreakdown.map((item, index) => {
-                const percentage = Math.round((item.value / incomeTotal) * 100);
-                return (
-                  <div key={item.label} className="space-y-1.5">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-bold text-[#525252]">{item.label}</span>
-                      <span className="font-bold text-[#2B2B2B]">{formatCompact(item.value)} <span className="text-[#A3A3A3] ml-1">({percentage}%)</span></span>
-                    </div>
-                    <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#F3F4F6]">
-                      <div
-                        className="h-full rounded-full"
-                        style={{
-                          width: `${percentage}%`,
-                          backgroundColor: CHART_COLORS[index % CHART_COLORS.length],
-                        }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
+          <Card title="Income Overview" subtitle="Revenue Sources" className="h-auto">
+            <div className="flex flex-col sm:flex-row items-center gap-6">
+                <div className="text-center sm:text-left">
+                   <p className="text-2xl font-bold text-[#2B2B2B]">{formatCurrency(incomeTotal)}</p>
+                   <p className="text-xs text-[#737373] mt-1">Total Gross Income</p>
+                </div>
+                <div className="flex-grow w-full space-y-5">
+                  {incomeBreakdown.map((item, index) => {
+                    const percentage = Math.round((item.value / incomeTotal) * 100);
+                    return (
+                      <div key={item.label} className="space-y-1.5">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="font-bold text-[#525252]">{item.label}</span>
+                          <span className="font-bold text-[#2B2B2B]">{formatCompact(item.value)} <span className="text-[#A3A3A3] ml-1">({percentage}%)</span></span>
+                        </div>
+                        <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#F3F4F6]">
+                          <div
+                            className="h-full rounded-full"
+                            style={{
+                              width: `${percentage}%`,
+                              backgroundColor: CHART_COLORS[index % CHART_COLORS.length],
+                            }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
             </div>
           </Card>
 
-          <Card title="Expense Analysis" subtitle="Transaction Volume by Category">
+          <Card title="Expense Analysis" subtitle="Transaction Volume" className="h-auto min-h-[320px]">
             <div className="h-[200px] w-full mt-2">
               <ResponsiveContainer>
                 <PieChart>
@@ -331,8 +316,8 @@ export default function Dashboard() {
                     nameKey="name"
                     cx="50%"
                     cy="50%"
-                    innerRadius={60} // Increased radius
-                    outerRadius={80} // Increased radius
+                    innerRadius={60} 
+                    outerRadius={80} 
                     stroke="#FFFFFF"
                     strokeWidth={3}
                   >
@@ -358,11 +343,12 @@ export default function Dashboard() {
         </div>
 
         {/* SECTION 3: Advanced Analytics */}
-        <div className="grid gap-6 lg:grid-cols-3 h-[350px]">
+        {/* Changed fixed height h-[350px] to responsive classes */}
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-3">
           
           {/* 1. Operating Margins */}
-          <Card title="Operating Margins" subtitle="Quarterly Revenue vs Profit">
-            <div className="h-full pb-8">
+          <Card title="Operating Margins" subtitle="Rev vs Profit" className="h-80">
+            <div className="h-full pb-4">
               <ResponsiveContainer width="100%" height="100%">
                 <ComposedChart data={marginData} margin={{top: 10, right: 0, left: -15, bottom: 0}}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
@@ -372,7 +358,6 @@ export default function Dashboard() {
                   <Tooltip contentStyle={{ borderRadius: '8px', borderColor: '#E5E7EB' }} />
                   <Legend wrapperStyle={{ fontSize: '10px' }} />
                   <Bar yAxisId="left" dataKey="revenue" name="Rev (k)" fill={COLORS.primary} barSize={24} radius={[4,4,0,0]} />
-                  {/* Adjusted scale/domain could be added if needed, but auto usually works with margins */}
                   <Line yAxisId="right" type="monotone" dataKey="margin" name="Margin %" stroke={COLORS.accent} strokeWidth={3} dot={{r:4, fill: COLORS.accent, strokeWidth: 2, stroke: '#fff'}} />
                 </ComposedChart>
               </ResponsiveContainer>
@@ -380,8 +365,8 @@ export default function Dashboard() {
           </Card>
 
            {/* 2. Budget Variance */}
-           <Card title="Budget Variance" subtitle="Dept. Actual vs Plan (k)">
-            <div className="h-full pb-8">
+           <Card title="Budget Variance" subtitle="Actual vs Plan (k)" className="h-80">
+            <div className="h-full pb-4">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={budgetData} barGap={4}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
@@ -397,8 +382,8 @@ export default function Dashboard() {
           </Card>
 
           {/* 3. Liability Structure */}
-          <Card title="Liability Structure" subtitle="Debt Distribution">
-            <div className="h-full pb-8 relative">
+          <Card title="Liability Structure" subtitle="Debt Distribution" className="h-80">
+            <div className="h-full pb-4 relative">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -430,9 +415,10 @@ export default function Dashboard() {
         </div>
 
         {/* SECTION 4: Strategy & Pipeline */}
-        <div className="grid gap-6 lg:grid-cols-3 h-[320px]">
-          <Card title="Financial Resilience" subtitle="Key Performance Dimensions">
-            <div className="h-full pb-6">
+        {/* Changed fixed height h-[320px] to responsive classes */}
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-3">
+          <Card title="Financial Resilience" subtitle="Performance" className="h-80">
+            <div className="h-full pb-4">
               <ResponsiveContainer width="100%" height="100%">
                 <RadarChart cx="50%" cy="50%" outerRadius="70%" data={healthData}>
                   <PolarGrid stroke="#E5E7EB" />
@@ -445,8 +431,8 @@ export default function Dashboard() {
             </div>
           </Card>
 
-           <Card title="Sales Pipeline" subtitle="Lead Conversion Funnel">
-             <div className="h-full pb-6">
+           <Card title="Sales Pipeline" subtitle="Lead Funnel" className="h-80">
+             <div className="h-full pb-4">
                <ResponsiveContainer width="100%" height="100%">
                  <AreaChart data={funnelData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
                     <defs>
@@ -465,7 +451,7 @@ export default function Dashboard() {
              </div>
            </Card>
 
-           <Card title="Fiscal Roadmap" subtitle="Q3-Q4 Strategic Milestones">
+           <Card title="Fiscal Roadmap" subtitle="Q3-Q4 Milestones" className="h-80">
               <FinancialRoadmap />
            </Card>
         </div>
