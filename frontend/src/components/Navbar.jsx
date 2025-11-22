@@ -22,22 +22,14 @@ export default function Navbar() {
         {/* --- Logo Section --- */}
         <NavLink
           to="/"
-          className="flex shrink-0 items-center gap-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#D4D4D4]"
+          className="flex shrink-0 items-center rounded-md focus:outline-none focus:ring-2 focus:ring-[#D4D4D4]"
         >
-          {/* Logo Icon: Dark Gray (#2B2B2B) background for high contrast */}
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2B2B2B] text-sm font-bold text-white shadow-md sm:h-10 sm:w-10 sm:text-base">
-            PH
-          </div>
-          <div className="flex flex-col">
-            {/* Main Text: Dark Gray (#2B2B2B) */}
-            <span className="text-sm font-bold tracking-tight text-[#2B2B2B] sm:text-base">
-              Pravara Health Care
-            </span>
-            {/* Subtext: Medium Gray (#B3B3B3) - darker would interfere with hierarchy, this matches palette */}
-            <span className="text-[0.65rem] font-semibold uppercase tracking-widest text-[#B3B3B3] sm:text-xs">
-              Employee CRM
-            </span>
-          </div>
+          {/* Logo Image */}
+          <img 
+            src="https://res.cloudinary.com/duc9svg7w/image/upload/v1763808251/pravara_logo_bmg7bj.png" 
+            alt="Pravara Health Care Logo" 
+            className="h-12 w-auto"
+          />
         </NavLink>
 
         {/* --- Mobile Toggle Button --- */}
