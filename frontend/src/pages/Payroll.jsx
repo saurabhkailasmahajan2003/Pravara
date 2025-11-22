@@ -79,83 +79,110 @@ const highestMonthly = payrollData.reduce(
 
 export default function Payroll() {
   return (
-    <div className="flex min-h-screen flex-col bg-[#000000]">
+    // Page Background: Light Gray
+    <div className="flex min-h-screen flex-col bg-[#F9FAFB]">
       <Navbar />
 
-      <main className="mx-auto flex w-full max-w-7xl grow flex-col gap-8 px-4 py-8 sm:gap-10 sm:px-6 sm:py-10">
-        <section className="relative overflow-hidden rounded-3xl bg-neon-gradient px-5 py-8 text-white shadow-2xl neon-glow-gradient sm:px-8 sm:py-10">
-          <div className="absolute -left-16 top-6 h-32 w-32 rounded-full bg-[#A020F0]/40 blur-3xl sm:h-40 sm:w-40" />
-          <div className="absolute right-0 bottom-0 h-40 w-40 translate-x-1/4 rounded-full bg-[#FF00CC]/20 blur-3xl sm:h-48 sm:w-48" />
-          <div className="relative grid gap-6 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+      <main className="mx-auto flex w-full max-w-7xl grow flex-col gap-6 px-4 py-8 sm:gap-8 sm:px-6 sm:py-10">
+        
+        {/* --- Header Section --- */}
+        <section className="rounded-xl border border-[#D4D4D4] bg-white px-5 py-8 shadow-sm sm:px-8 sm:py-10">
+          <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr] lg:items-start">
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full glass px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-white sm:text-xs">
+              <span className="inline-flex items-center gap-2 rounded-md bg-[#F3F4F6] px-3 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-[#525252] sm:text-xs">
                 Payroll overview
               </span>
-              <h1 className="mt-4 text-2xl font-semibold sm:text-3xl lg:text-4xl">
+              <h1 className="mt-4 text-2xl font-bold text-[#2B2B2B] sm:text-3xl lg:text-4xl">
                 Employee compensation summary
               </h1>
-              <p className="mt-3 max-w-2xl text-xs text-slate-200 sm:mt-4 sm:text-sm">
+              <p className="mt-3 max-w-2xl text-sm text-[#525252]">
                 Review monthly salary commitments, annual packages, and growth trends across Pravara Health Care. Use the insights below to plan payouts, manage incentives, and align budgets.
               </p>
-              <div className="mt-5 flex flex-wrap gap-2.5 sm:mt-6 sm:gap-3">
+
+              {/* Actions */}
+              <div className="mt-6 flex flex-wrap gap-3">
                 <NavLink
                   to="/total-salaries"
-                  className="btn-neon-primary inline-flex items-center gap-2 text-xs sm:px-4 sm:text-sm"
+                  className="inline-flex items-center gap-2 rounded-md bg-[#2B2B2B] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#525252]"
                 >
                   View total salaries
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-4 w-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12l-3.75 3.75M21 12H3" />
                   </svg>
                 </NavLink>
                 <NavLink
                   to="/employees"
-                  className="btn-neon-outline inline-flex items-center gap-2 text-xs sm:px-4 sm:text-sm"
+                  className="inline-flex items-center gap-2 rounded-md border border-[#D4D4D4] bg-white px-4 py-2 text-sm font-semibold text-[#2B2B2B] shadow-sm transition hover:bg-[#F9FAFB]"
                 >
                   Employee directory
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-4 w-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
                   </svg>
                 </NavLink>
               </div>
             </div>
-            <div className="grid gap-3 rounded-2xl glass-card p-4 sm:gap-4 sm:p-5">
-              {[{ label: 'Monthly payroll', value: formatCurrency(totalMonthly), detail: '+4.2% vs last cycle' }, { label: 'Annualised payroll', value: formatCurrency(totalAnnual), detail: 'Including bonuses & perks' }, { label: 'Highest monthly pay', value: formatCurrency(highestMonthly), detail: '₹1.8L at Oncology' }].map((stat) => (
-                <div key={stat.label} className="rounded-xl glass p-3 sm:p-4">
-                  <p className="text-[0.6rem] font-medium uppercase tracking-[0.3em] text-white/80 sm:text-xs">{stat.label}</p>
-                  <p className="mt-2 text-xl font-semibold text-white sm:text-2xl">{stat.value}</p>
-                  <p className="mt-1 text-[0.65rem] font-medium text-white/70 sm:text-xs">{stat.detail}</p>
+
+            {/* Key Stats Box */}
+            <div className="grid gap-3 rounded-lg border border-[#E5E7EB] bg-[#F9FAFB] p-4 sm:p-5">
+              {[
+                { label: 'Monthly payroll', value: formatCurrency(totalMonthly), detail: '+4.2% vs last cycle' },
+                { label: 'Annualised payroll', value: formatCurrency(totalAnnual), detail: 'Including bonuses & perks' },
+                { label: 'Highest monthly pay', value: formatCurrency(highestMonthly), detail: '₹1.8L at Oncology' },
+              ].map((stat) => (
+                <div key={stat.label} className="rounded-md bg-white p-3 shadow-sm border border-[#E5E7EB] sm:p-4">
+                  <p className="text-[0.6rem] font-bold uppercase tracking-wider text-[#737373] sm:text-xs">
+                    {stat.label}
+                  </p>
+                  <p className="mt-1 text-xl font-bold text-[#2B2B2B] sm:text-2xl">
+                    {stat.value}
+                  </p>
+                  <p className="mt-1 text-[0.7rem] font-medium text-[#525252] sm:text-xs">
+                    {stat.detail}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
+        {/* --- Quick Stats Grid --- */}
         <section className="grid gap-3 sm:grid-cols-4 sm:gap-4">
-          {[{ label: 'Average monthly pay', value: formatCurrency(averageMonthly), tone: 'bg-[#A020F0]/20 text-[#A020F0]' }, { label: 'Median salary band', value: '₹72K', tone: 'bg-[#D400FF]/20 text-[#D400FF]' }, { label: 'Variable payout fund', value: '₹2.4L', tone: 'bg-[#FF00CC]/20 text-[#FF00CC]' }, { label: 'Payroll completion', value: '92%', tone: 'bg-[#A020F0]/20 text-[#A020F0]' }].map((item) => (
-            <div key={item.label} className="card-neon p-4 sm:p-5">
-              <p className="text-[0.65rem] font-medium uppercase tracking-[0.25em] text-[#A0A0A0] sm:text-xs">{item.label}</p>
-              <p className={`mt-3 inline-flex items-center rounded-full glass px-3 py-1 text-xs font-semibold ${item.tone} sm:text-sm`}>{item.value}</p>
+          {[
+            { label: 'Average monthly pay', value: formatCurrency(averageMonthly), accent: 'border-l-4 border-[#2B2B2B]' },
+            { label: 'Median salary band', value: '₹72K', accent: 'border-l-4 border-[#737373]' },
+            { label: 'Variable payout fund', value: '₹2.4L', accent: 'border-l-4 border-[#525252]' },
+            { label: 'Payroll completion', value: '92%', accent: 'border-l-4 border-emerald-600' },
+          ].map((item) => (
+            <div key={item.label} className={`rounded-lg border border-[#D4D4D4] bg-white p-4 shadow-sm ${item.accent}`}>
+              <p className="text-[0.65rem] font-bold uppercase tracking-wider text-[#737373] sm:text-xs">
+                {item.label}
+              </p>
+              <p className="mt-2 text-lg font-bold text-[#2B2B2B] sm:text-xl">
+                {item.value}
+              </p>
             </div>
           ))}
         </section>
 
-        <section className="overflow-hidden rounded-3xl card-neon">
+        {/* --- Payroll Table --- */}
+        <section className="overflow-hidden rounded-xl border border-[#D4D4D4] bg-white shadow-sm">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-white/10 text-left">
-              <thead className="glass text-[0.65rem] font-semibold uppercase tracking-[0.25em] text-[#A0A0A0] sm:text-xs">
+            <table className="min-w-full divide-y divide-[#E5E7EB] text-left">
+              <thead className="bg-[#F9FAFB]">
                 <tr>
-                  <th scope="col" className="px-4 py-3 sm:px-6 sm:py-4">Employee</th>
-                  <th scope="col" className="px-4 py-3 sm:px-6 sm:py-4">Employee ID</th>
-                  <th scope="col" className="px-4 py-3 sm:px-6 sm:py-4">Monthly Salary</th>
-                  <th scope="col" className="px-4 py-3 sm:px-6 sm:py-4">Annual Package</th>
+                  <th scope="col" className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#737373] sm:px-6 sm:py-4">Employee</th>
+                  <th scope="col" className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#737373] sm:px-6 sm:py-4">Employee ID</th>
+                  <th scope="col" className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#737373] sm:px-6 sm:py-4">Monthly Salary</th>
+                  <th scope="col" className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#737373] sm:px-6 sm:py-4">Annual Package</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/10 text-xs text-white sm:text-sm">
+              <tbody className="divide-y divide-[#E5E7EB] bg-white">
                 {payrollData.map((employee) => (
-                  <tr key={employee.id} className="transition hover:bg-neon-gradient-blur">
+                  <tr key={employee.id} className="group transition hover:bg-[#F9FAFB]">
                     <td className="px-4 py-3 sm:px-6 sm:py-4">
                       <div className="flex items-center gap-3">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-neon-gradient text-xs font-semibold text-white neon-glow-purple sm:h-10 sm:w-10 sm:text-sm">
+                        {/* Initials Avatar */}
+                        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F3F4F6] text-xs font-bold text-[#2B2B2B] border border-[#E5E7EB] sm:h-10 sm:w-10 sm:text-sm group-hover:bg-[#E5E7EB] transition-colors">
                           {employee.name
                             .split(' ')
                             .slice(0, 2)
@@ -163,14 +190,14 @@ export default function Payroll() {
                             .join('')}
                         </span>
                         <div>
-                          <p className="text-sm font-semibold text-white sm:text-base">{employee.name}</p>
-                          <p className="text-[0.6rem] font-medium uppercase tracking-[0.25em] text-[#A0A0A0] sm:text-xs">Payroll cycle</p>
+                          <p className="text-sm font-semibold text-[#2B2B2B] sm:text-base">{employee.name}</p>
+                          <p className="text-[0.65rem] font-medium uppercase tracking-wider text-[#737373]">Payroll cycle</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-white/80 sm:px-6 sm:py-4">{employee.id}</td>
-                    <td className="px-4 py-3 text-white sm:px-6 sm:py-4">{employee.monthlySalary}</td>
-                    <td className="px-4 py-3 text-white sm:px-6 sm:py-4">{employee.annualPackage}</td>
+                    <td className="px-4 py-3 text-sm font-medium text-[#525252] sm:px-6 sm:py-4">{employee.id}</td>
+                    <td className="px-4 py-3 text-sm font-bold text-[#2B2B2B] sm:px-6 sm:py-4">{employee.monthlySalary}</td>
+                    <td className="px-4 py-3 text-sm font-medium text-[#525252] sm:px-6 sm:py-4">{employee.annualPackage}</td>
                   </tr>
                 ))}
               </tbody>
@@ -182,4 +209,3 @@ export default function Payroll() {
     </div>
   )
 }
-
