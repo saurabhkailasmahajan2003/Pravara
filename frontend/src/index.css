@@ -1,38 +1,29 @@
 @import "tailwindcss";
 
 /* ============================================
-   NEON FUTURISTIC THEME - COLOR PALETTE
+   PROFESSIONAL CRM THEME - GRAYSCALE PALETTE
+   Based on Image: #FFFFFF, #D4D4D4, #B3B3B3, #2B2B2B
    ============================================ */
 @theme {
-  /* Primary Colors */
-  --color-primary: #A020F0; /* Vibrant Purple */
-  --color-secondary: #FF00CC; /* Hot Pink */
-  --color-accent: #D400FF; /* Magenta */
+  /* Primary Colors from Image */
+  --color-primary: #2B2B2B; /* Deep Charcoal - Main Actions/Text */
+  --color-secondary: #B3B3B3; /* Medium Gray - Borders/Icons */
+  --color-accent: #D4D4D4; /* Light Gray - Backgrounds/Hovers */
   
-  /* Gradient Colors */
-  --color-gradient-start: #A020F0; /* Vibrant Purple */
-  --color-gradient-end: #FF00CC; /* Hot Pink */
-  --color-gradient-mid: #D400FF; /* Magenta */
+  /* Semantic Colors */
+  --color-bg-body: #FFFFFF; /* Pure White */
+  --color-bg-surface: #FFFFFF; /* Surface White */
+  --color-bg-subtle: #F5F5F5; /* Very light gray for contrast */
   
-  /* Background Colors */
-  --color-bg-primary: #000000; /* Deep Black */
-  --color-bg-secondary: #0A0A0A; /* Charcoal Gray */
-  --color-bg-tertiary: #1A1A1A; /* Slightly lighter for cards */
+  --color-border-light: #D4D4D4;
+  --color-border-dark: #B3B3B3;
   
-  /* Text Colors */
-  --color-text-primary: #FFFFFF; /* White */
-  --color-text-secondary: #E5E5E5; /* Soft Gray */
-  --color-text-muted: #A0A0A0; /* Muted Gray */
+  --color-text-main: #2B2B2B;
+  --color-text-muted: #737373; /* Derived for subtitle readability */
   
-  /* Neon Glow Colors */
-  --color-glow-purple: #A020F0;
-  --color-glow-pink: #FF00CC;
-  --color-glow-magenta: #D400FF;
-  
-  /* Glassmorphism Colors */
-  --color-glass-bg: rgba(255, 255, 255, 0.05);
-  --color-glass-border: rgba(160, 32, 240, 0.2);
-  --color-glass-border-hover: rgba(160, 32, 240, 0.4);
+  /* Status Colors (Professional Muted) */
+  --color-success: #2B2B2B; 
+  --color-warning: #525252;
 }
 
 /* ============================================
@@ -43,272 +34,197 @@
 }
 
 body {
-  @apply bg-bg-primary text-text-primary;
-  background: linear-gradient(135deg, #000000 0%, #0A0A0A 100%);
-  min-height: 100vh;
+  background-color: var(--color-bg-body);
+  color: var(--color-text-main);
+  font-family: system-ui, -apple-system, sans-serif; /* Clean sans-serif */
 }
 
 /* ============================================
-   NEON GLOW UTILITIES
+   PROFESSIONAL SHADOWS (Clean & Sharp)
    ============================================ */
-.neon-glow-purple {
-  box-shadow: 
-    0 0 10px rgba(160, 32, 240, 0.5),
-    0 0 20px rgba(160, 32, 240, 0.3),
-    0 0 30px rgba(160, 32, 240, 0.2),
-    inset 0 0 10px rgba(160, 32, 240, 0.1);
+.shadow-subtle {
+  box-shadow: 0 1px 2px 0 rgba(43, 43, 43, 0.05);
 }
 
-.neon-glow-pink {
+.shadow-elevated {
   box-shadow: 
-    0 0 10px rgba(255, 0, 204, 0.5),
-    0 0 20px rgba(255, 0, 204, 0.3),
-    0 0 30px rgba(255, 0, 204, 0.2),
-    inset 0 0 10px rgba(255, 0, 204, 0.1);
+    0 4px 6px -1px rgba(43, 43, 43, 0.1), 
+    0 2px 4px -1px rgba(43, 43, 43, 0.06);
 }
 
-.neon-glow-magenta {
+.shadow-prominent {
   box-shadow: 
-    0 0 10px rgba(212, 0, 255, 0.5),
-    0 0 20px rgba(212, 0, 255, 0.3),
-    0 0 30px rgba(212, 0, 255, 0.2),
-    inset 0 0 10px rgba(212, 0, 255, 0.1);
+    0 10px 15px -3px rgba(43, 43, 43, 0.1), 
+    0 4px 6px -2px rgba(43, 43, 43, 0.05);
 }
 
-.neon-glow-gradient {
-  box-shadow: 
-    0 0 20px rgba(160, 32, 240, 0.4),
-    0 0 40px rgba(255, 0, 204, 0.3),
-    0 0 60px rgba(212, 0, 255, 0.2),
-    inset 0 0 20px rgba(160, 32, 240, 0.1);
+.hover-shadow {
+  transition: box-shadow 0.2s ease-in-out, transform 0.1s ease;
 }
 
-.neon-glow-strong {
-  box-shadow: 
-    0 0 20px rgba(160, 32, 240, 0.6),
-    0 0 40px rgba(255, 0, 204, 0.5),
-    0 0 60px rgba(212, 0, 255, 0.4),
-    0 0 80px rgba(160, 32, 240, 0.2);
+.hover-shadow:hover {
+  box-shadow: 0 10px 15px -3px rgba(43, 43, 43, 0.1);
 }
 
-.neon-glow-text {
-  text-shadow: 
-    0 0 10px rgba(160, 32, 240, 0.8),
-    0 0 20px rgba(255, 0, 204, 0.6),
-    0 0 30px rgba(212, 0, 255, 0.4);
+/* Text Utilities */
+.text-subtle {
+  color: var(--color-text-muted);
+}
+
+.text-emphasis {
+  color: var(--color-text-main);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 /* ============================================
-   GRADIENT BACKGROUND UTILITIES
+   BACKGROUND UTILITIES (Replaces Neon)
    ============================================ */
-.bg-neon-gradient {
-  background: linear-gradient(135deg, #A020F0 0%, #D400FF 50%, #FF00CC 100%);
+/* Mapping old neon classes to professional clean styles */
+
+.bg-neon-gradient, 
+.bg-professional-gradient {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .bg-neon-gradient-radial {
-  background: radial-gradient(circle at center, rgba(160, 32, 240, 0.3) 0%, rgba(0, 0, 0, 0.8) 70%);
+  background: radial-gradient(circle at center, #F5F5F5 0%, #FFFFFF 100%);
 }
 
 .bg-neon-gradient-blur {
-  background: linear-gradient(135deg, rgba(160, 32, 240, 0.2) 0%, rgba(212, 0, 255, 0.15) 50%, rgba(255, 0, 204, 0.2) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-.bg-neon-gradient-vertical {
-  background: linear-gradient(180deg, #A020F0 0%, #D400FF 50%, #FF00CC 100%);
-}
-
-.bg-neon-gradient-horizontal {
-  background: linear-gradient(90deg, #A020F0 0%, #D400FF 50%, #FF00CC 100%);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 /* ============================================
-   GLASSMORPHISM UTILITIES
+   CARD STYLES (Replaces Glassmorphism)
    ============================================ */
-.glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(160, 32, 240, 0.2);
+/* Converting "Glass" to "Clean Card" */
+.glass, .glass-card, .card-neon {
+  @apply relative overflow-hidden rounded-lg p-6 transition-all duration-200;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-light);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .glass-strong {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border: 1px solid rgba(160, 32, 240, 0.3);
+  background: #F5F5F5;
+  border: 1px solid var(--color-border-dark);
 }
 
-.glass-hover {
-  transition: all 0.3s ease;
+.glass-hover:hover, .card-neon:hover {
+  border-color: var(--color-border-dark);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
 }
 
-.glass-hover:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(160, 32, 240, 0.5);
-  box-shadow: 
-    0 0 20px rgba(160, 32, 240, 0.3),
-    0 0 40px rgba(255, 0, 204, 0.2);
-}
-
-.glass-card {
-  background: rgba(26, 26, 26, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(160, 32, 240, 0.2);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    inset 0 0 20px rgba(160, 32, 240, 0.05);
-}
-
-/* ============================================
-   ANIMATION UTILITIES
-   ============================================ */
-@keyframes neon-pulse {
-  0%, 100% {
-    opacity: 1;
-    box-shadow: 
-      0 0 10px rgba(160, 32, 240, 0.5),
-      0 0 20px rgba(160, 32, 240, 0.3),
-      0 0 30px rgba(160, 32, 240, 0.2);
-  }
-  50% {
-    opacity: 0.8;
-    box-shadow: 
-      0 0 20px rgba(160, 32, 240, 0.7),
-      0 0 40px rgba(255, 0, 204, 0.5),
-      0 0 60px rgba(212, 0, 255, 0.3);
-  }
-}
-
-.animate-neon-pulse {
-  animation: neon-pulse 2s ease-in-out infinite;
-}
-
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease infinite;
-}
-
-/* ============================================
-   BUTTON STYLES
-   ============================================ */
-.btn-neon-primary {
-  @apply relative overflow-hidden rounded-full px-6 py-3 font-semibold text-white transition-all duration-300;
-  background: linear-gradient(135deg, #A020F0 0%, #D400FF 50%, #FF00CC 100%);
-  box-shadow: 
-    0 0 20px rgba(160, 32, 240, 0.4),
-    0 0 40px rgba(255, 0, 204, 0.3),
-    inset 0 0 20px rgba(255, 255, 255, 0.1);
-}
-
-.btn-neon-primary:hover {
-  box-shadow: 
-    0 0 30px rgba(160, 32, 240, 0.6),
-    0 0 60px rgba(255, 0, 204, 0.5),
-    0 0 80px rgba(212, 0, 255, 0.3),
-    inset 0 0 30px rgba(255, 255, 255, 0.15);
-  transform: translateY(-2px);
-}
-
-.btn-neon-primary:active {
-  transform: translateY(0);
-}
-
-.btn-neon-outline {
-  @apply relative overflow-hidden rounded-full border-2 px-6 py-3 font-semibold text-white transition-all duration-300;
-  border-color: #A020F0;
-  background: rgba(160, 32, 240, 0.05);
-  box-shadow: 
-    0 0 10px rgba(160, 32, 240, 0.3),
-    inset 0 0 10px rgba(160, 32, 240, 0.1);
-}
-
-.btn-neon-outline:hover {
-  border-color: #FF00CC;
-  background: rgba(255, 0, 204, 0.1);
-  box-shadow: 
-    0 0 20px rgba(160, 32, 240, 0.5),
-    0 0 40px rgba(255, 0, 204, 0.3),
-    inset 0 0 20px rgba(255, 0, 204, 0.15);
-  transform: translateY(-2px);
-}
-
-.btn-neon-outline:active {
-  transform: translateY(0);
-}
-
-/* ============================================
-   CARD STYLES
-   ============================================ */
-.card-neon {
-  @apply relative overflow-hidden rounded-3xl p-6 transition-all duration-300;
-  background: rgba(26, 26, 26, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(160, 32, 240, 0.2);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    inset 0 0 20px rgba(160, 32, 240, 0.05);
-}
-
-.card-neon:hover {
-  border-color: rgba(160, 32, 240, 0.4);
-  box-shadow: 
-    0 12px 48px rgba(0, 0, 0, 0.5),
-    0 0 30px rgba(160, 32, 240, 0.3),
-    inset 0 0 30px rgba(160, 32, 240, 0.1);
-  transform: translateY(-4px);
-}
-
+/* Specifically specifically for the gradient card, make it a featured dark card */
 .card-neon-gradient {
-  @apply relative overflow-hidden rounded-3xl p-6 text-white transition-all duration-300;
-  background: linear-gradient(135deg, rgba(160, 32, 240, 0.3) 0%, rgba(212, 0, 255, 0.2) 50%, rgba(255, 0, 204, 0.3) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(160, 32, 240, 0.3);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(160, 32, 240, 0.2),
-    inset 0 0 20px rgba(255, 255, 255, 0.05);
+  @apply relative overflow-hidden rounded-lg p-6 text-white transition-all duration-200;
+  background: var(--color-primary); /* #2B2B2B */
+  border: 1px solid #1a1a1a;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }
 
 .card-neon-gradient:hover {
-  box-shadow: 
-    0 12px 48px rgba(0, 0, 0, 0.5),
-    0 0 40px rgba(160, 32, 240, 0.4),
-    0 0 60px rgba(255, 0, 204, 0.3),
-    inset 0 0 30px rgba(255, 255, 255, 0.1);
-  transform: translateY(-4px);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
 }
 
 /* ============================================
-   TEXT GRADIENT UTILITIES
+   BUTTON STYLES (Solid & Outline)
    ============================================ */
+
+/* Primary Action - Solid Dark */
+.btn-neon-primary, .btn-primary {
+  @apply relative inline-flex items-center justify-center rounded-md px-6 py-2.5 text-sm font-medium text-white transition-colors duration-200;
+  background: var(--color-primary);
+  border: 1px solid transparent;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-neon-primary:hover, .btn-primary:hover {
+  background: #404040; /* Slightly lighter charcoal for hover */
+  transform: none; /* Professional apps rarely jump around */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-neon-primary:active, .btn-primary:active {
+  background: #1a1a1a; /* Darker for active */
+}
+
+/* Secondary Action - Outline */
+.btn-neon-outline, .btn-outline {
+  @apply relative inline-flex items-center justify-center rounded-md px-6 py-2.5 text-sm font-medium transition-colors duration-200;
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-border-dark); /* #B3B3B3 */
+}
+
+.btn-neon-outline:hover, .btn-outline:hover {
+  background: #F5F5F5;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: none;
+}
+
+/* ============================================
+   TEXT STYLES
+   ============================================ */
+/* Remove gradients, use solid colors for readability */
 .text-neon-gradient {
-  background: linear-gradient(135deg, #A020F0 0%, #D400FF 50%, #FF00CC 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  background: none;
+  -webkit-text-fill-color: initial;
+  color: var(--color-primary);
 }
 
 .text-neon-glow {
-  color: #FFFFFF;
-  text-shadow: 
-    0 0 10px rgba(160, 32, 240, 0.8),
-    0 0 20px rgba(255, 0, 204, 0.6),
-    0 0 30px rgba(212, 0, 255, 0.4);
+  color: var(--color-primary);
+  text-shadow: none;
+  font-weight: 700;
+}
+
+/* ============================================
+   CRM SPECIFIC UTILITIES
+   ============================================ */
+.table-header {
+  @apply bg-gray-50 text-xs font-semibold uppercase tracking-wider text-gray-500;
+  background-color: #F5F5F5;
+  color: #525252;
+  border-bottom: 2px solid var(--color-border-light);
+}
+
+.table-row {
+  @apply border-b transition-colors;
+  border-color: #E5E5E5;
+}
+
+.table-row:hover {
+  background-color: #FAFAFA;
+}
+
+.badge {
+  @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  background-color: #F5F5F5;
+  color: var(--color-primary);
+  border: 1px solid var(--color-border-light);
+}
+
+.input-field {
+  @apply block w-full rounded-md border px-3 py-2 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black sm:text-sm;
+  border-color: var(--color-secondary); /* #B3B3B3 */
+  background-color: #FFFFFF;
+  color: var(--color-primary);
+}
+
+/* Animation - Subtle fade instead of pulse */
+@keyframes subtle-fade {
+  0% { opacity: 0.95; }
+  100% { opacity: 1; }
+}
+
+.animate-neon-pulse {
+  animation: none; /* Disabled for professional feel */
 }

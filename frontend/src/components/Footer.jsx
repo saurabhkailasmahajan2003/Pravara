@@ -1,29 +1,11 @@
+import { NavLink } from 'react-router-dom'
+
 const quickLinks = [
-  { label: 'Dashboard', href: '/', icon: (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-4 w-4">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l9-9 9 9M4.5 10.5V21h6v-6h3v6h6v-10.5" />
-    </svg>
-  ) },
-  { label: 'Employees', href: '/employees', icon: (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-4 w-4">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.25h15" />
-    </svg>
-  ) },
-  { label: 'Payroll', href: '/payroll', icon: (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-4 w-4">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
-    </svg>
-  ) },
-  { label: 'Total Salaries', href: '/total-salaries', icon: (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-4 w-4">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 9h15m-13.5 4.5h12m-9 4.5h6" />
-    </svg>
-  ) },
-  { label: 'Other Expenses', href: '/other-expenses', icon: (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-4 w-4">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5h18M3 12h18M3 16.5h18" />
-    </svg>
-  ) },
+  { label: 'Dashboard', href: '/' },
+  { label: 'Employees', href: '/employees' },
+  { label: 'Payroll', href: '/payroll' },
+  { label: 'Total Salaries', href: '/total-salaries' },
+  { label: 'Other Expenses', href: '/other-expenses' },
 ]
 
 const policyLinks = [
@@ -63,7 +45,14 @@ const socialLinks = [
 ]
 
 export default function Footer() {
+  const BG_MAIN = "bg-[#0A0A0A]"; // Deep black background
+  const BG_ACCENT = "bg-[#171717]"; // Dark gray for secondary background (bottom bar, contact box)
+  const TEXT_PRIMARY = "text-white";
+  const TEXT_MUTED = "text-[#A3A3A3]"; // Light gray for secondary text
+  const BORDER_DARK = "border-[#262626]"; // Dark gray for borders
+
   return (
+<<<<<<< HEAD
     <footer className="relative mt-10 border-t border-gray-200 bg-white text-gray-700">
       <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:gap-12 sm:px-6 sm:py-12 md:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-4 sm:space-y-5">
@@ -77,23 +66,51 @@ export default function Footer() {
             </div>
           </div>
           <p className="max-w-xs text-xs text-gray-500 sm:text-sm">
+=======
+    // Apply main dark background and border
+    <footer className={`mt-auto border-t ${BORDER_DARK} ${BG_MAIN} ${TEXT_MUTED}`}>
+      <div className="mx-auto grid max-w-screen-2xl gap-10 px-4 py-12 sm:gap-12 sm:px-6 lg:grid-cols-4 xl:px-16">
+        
+        {/* --- Brand Section --- */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            {/* Logo box remains dark, text white */}
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#2B2B2B] text-white shadow-md">
+              <span className="text-base font-bold">PH</span>
+            </div>
+            <div>
+              <p className={`text-sm font-bold ${TEXT_PRIMARY}`}>Pravara Health Care</p>
+              <p className={`text-[0.65rem] font-bold uppercase tracking-wider ${TEXT_MUTED}`}>Employee CRM</p>
+            </div>
+          </div>
+          {/* Main paragraph text is muted light gray */}
+          <p className={`max-w-xs text-sm ${TEXT_MUTED}`}>
+>>>>>>> 0a1b03ba285cbe54f278af5aca32eb877e1d042e
             Empowering Pravara Health Care teams with real-time employee intelligence, payroll transparency, and operational alignment.
           </p>
-          <div className="flex flex-wrap gap-2.5 sm:gap-3">
+          
+          {/* Social Icons: Inverted colors for dark mode */}
+          <div className="flex gap-3">
             {socialLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
+<<<<<<< HEAD
                 className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-[0.65rem] font-semibold text-gray-700 transition hover:border-indigo-300 hover:text-indigo-600 sm:text-xs"
+=======
+                aria-label={link.label}
+                className={`flex h-8 w-8 items-center justify-center rounded-full border ${BORDER_DARK} ${BG_ACCENT} ${TEXT_MUTED} transition-colors hover:border-white hover:bg-white hover:text-black`}
+>>>>>>> 0a1b03ba285cbe54f278af5aca32eb877e1d042e
               >
                 {link.icon}
-                {link.label}
               </a>
             ))}
           </div>
         </div>
 
+        {/* --- Quick Links --- */}
         <div>
+<<<<<<< HEAD
           <h3 className="text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-gray-500 sm:text-sm">Quick Links</h3>
           <ul className="mt-4 space-y-2 text-sm text-gray-700">
             {quickLinks.map((link) => (
@@ -105,20 +122,46 @@ export default function Footer() {
                   <span className="flex h-7 w-7 items-center justify-center rounded-full border border-indigo-100 bg-indigo-50 text-indigo-600 sm:h-8 sm:w-8">
                     {link.icon}
                   </span>
+=======
+          <h3 className={`text-xs font-bold uppercase tracking-wider ${TEXT_PRIMARY}`}>Quick Links</h3>
+          <ul className="mt-4 space-y-3 text-sm">
+            {quickLinks.map((link) => (
+              <li key={link.label}>
+                <NavLink
+                  to={link.href}
+                  className={({ isActive }) =>
+                    isActive
+                      ? `font-semibold ${TEXT_PRIMARY}` // Active link is white
+                      : `${TEXT_MUTED} hover:${TEXT_PRIMARY} hover:underline` // Inactive links are light gray, hover to white
+                  }
+                >
+>>>>>>> 0a1b03ba285cbe54f278af5aca32eb877e1d042e
                   {link.label}
-                </a>
+                </NavLink>
               </li>
             ))}
           </ul>
         </div>
 
+        {/* --- Policies --- */}
         <div>
+<<<<<<< HEAD
           <h3 className="text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-gray-500 sm:text-sm">Policies</h3>
           <ul className="mt-4 space-y-2 text-sm text-gray-700">
             {policyLinks.map((link) => (
               <li key={link.label}>
                 <a className="inline-flex items-center gap-2 text-xs transition hover:text-indigo-600 sm:text-sm" href={link.href}>
                   <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
+=======
+          <h3 className={`text-xs font-bold uppercase tracking-wider ${TEXT_PRIMARY}`}>Policies</h3>
+          <ul className="mt-4 space-y-3 text-sm">
+            {policyLinks.map((link) => (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  className={`${TEXT_MUTED} hover:${TEXT_PRIMARY} hover:underline`}
+                >
+>>>>>>> 0a1b03ba285cbe54f278af5aca32eb877e1d042e
                   {link.label}
                 </a>
               </li>
@@ -126,6 +169,7 @@ export default function Footer() {
           </ul>
         </div>
 
+<<<<<<< HEAD
         <div className="space-y-4 sm:space-y-5">
           <div>
             <h3 className="text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-gray-500 sm:text-sm">Contact</h3>
@@ -141,10 +185,31 @@ export default function Footer() {
               support@pravarahealthcare.in
             </a>
             <p className="mt-2 text-xs text-gray-500 sm:text-sm">Phone: +91 1800-123-4521</p>
+=======
+        {/* --- Contact Info --- */}
+        <div>
+          <h3 className={`text-xs font-bold uppercase tracking-wider ${TEXT_PRIMARY}`}>Contact</h3>
+          <ul className={`mt-4 space-y-2 text-sm ${TEXT_MUTED}`}>
+            <li>Pravara Health Care HQ</li>
+            <li>Nashik Road, Pravara Nagar</li>
+            <li>Maharashtra 422101</li>
+          </ul>
+          {/* Contact Box: Dark gray background, dark border */}
+          <div className={`mt-5 rounded-lg border ${BORDER_DARK} ${BG_ACCENT} p-4`}>
+            <p className={`text-[0.65rem] font-bold uppercase tracking-wider ${TEXT_MUTED}`}>Email & Support</p>
+            <a
+              href="mailto:support@pravarahealthcare.in"
+              className={`mt-1 block text-sm font-bold ${TEXT_PRIMARY} hover:underline`}
+            >
+              support@pravarahealthcare.in
+            </a>
+            <p className={`mt-1 text-xs ${TEXT_MUTED}`}>+91 1800-123-4521</p>
+>>>>>>> 0a1b03ba285cbe54f278af5aca32eb877e1d042e
           </div>
         </div>
       </div>
 
+<<<<<<< HEAD
       <div className="relative border-t border-gray-200 bg-gray-50">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-5 text-[0.65rem] font-medium text-gray-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-6 sm:text-xs">
           <p>© {new Date().getFullYear()} Pravara Health Care. All rights reserved.</p>
@@ -158,10 +223,20 @@ export default function Footer() {
             <a className="transition hover:text-indigo-600" href="#">
               Accessibility
             </a>
+=======
+      {/* --- Bottom Bar --- */}
+      {/* Bottom bar uses the accent dark gray background */}
+      <div className={`border-t ${BORDER_DARK} ${BG_ACCENT}`}>
+        <div className={`mx-auto flex max-w-screen-2xl flex-col items-center gap-3 px-4 py-6 text-xs ${TEXT_MUTED} sm:flex-row sm:justify-between sm:px-6 xl:px-16`}>
+          <p>© {new Date().getFullYear()} Pravara Health Care. All rights reserved.</p>
+          <div className="flex gap-4">
+            <a href="#" className={`hover:${TEXT_PRIMARY} hover:underline`}>Support Portal</a>
+            <a href="#" className={`hover:${TEXT_PRIMARY} hover:underline`}>Status</a>
+            <a href="#" className={`hover:${TEXT_PRIMARY} hover:underline`}>Accessibility</a>
+>>>>>>> 0a1b03ba285cbe54f278af5aca32eb877e1d042e
           </div>
         </div>
       </div>
     </footer>
   )
 }
-
