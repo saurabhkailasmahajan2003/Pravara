@@ -1,462 +1,427 @@
-import React from 'react';
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import React, { useState } from 'react';
+import { 
+  Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, ComposedChart, 
+  Legend, Line, LineChart, Pie, PieChart, PolarAngleAxis, PolarGrid, 
+  PolarRadiusAxis, Radar, RadarChart, RadialBar, RadialBarChart, 
+  ReferenceLine, ResponsiveContainer, Scatter, ScatterChart, Tooltip, 
+  Treemap, XAxis, YAxis, Sector 
+} from "recharts";
+import { 
+  ArrowUpRight, ArrowDownRight, Activity, Users, DollarSign, 
+  ShoppingBag, Target, Clock, MapPin, PieChart as PieIcon, 
+  BarChart2, Layers, Zap 
+} from 'lucide-react';
 
-// Theme Palette for JS usage (Charts)
+// --- THEME CONFIGURATION ---
 const THEME = {
-  primary: "#2B2B2B",   // Dark Charcoal
-  secondary: "#B3B3B3", // Medium Gray
-  accent: "#D4D4D4",    // Light Gray
-  text: "#2B2B2B",
-  grid: "#E5E5E5"
+  primary: "#1F2937",   // Gray 800
+  secondary: "#4B5563", // Gray 600
+  accent: "#10B981",    // Emerald 500
+  danger: "#EF4444",    // Red 500
+  warning: "#F59E0B",   // Amber 500
+  background: "#F9FAFB",// Gray 50
+  card: "#FFFFFF",
+  textMain: "#111827",
+  textSub: "#6B7280",
+  grid: "#E5E7EB",
+  // Palette for complex charts
+  colors: ["#1F2937", "#10B981", "#6366F1", "#F59E0B", "#EC4899", "#8B5CF6", "#14B8A6"]
 };
 
-const topLineData = [
-  { month: "Jan", totalSales: 320 },
-  { month: "Feb", totalSales: 360 },
-  { month: "Mar", totalSales: 410 },
-  { month: "Apr", totalSales: 455 },
-  { month: "May", totalSales: 520 },
-  { month: "Jun", totalSales: 565 },
+// --- MOCK DATA ---
+
+// 1. Top Line (Bar - Main Revenue)
+const revenueData = [
+  { month: "Jan", revenue: 320, target: 300 },
+  { month: "Feb", revenue: 360, target: 320 },
+  { month: "Mar", revenue: 410, target: 350 },
+  { month: "Apr", revenue: 455, target: 400 },
+  { month: "May", revenue: 520, target: 450 },
+  { month: "Jun", revenue: 565, target: 500 },
 ];
 
-const summaryStats = [
-  { label: "Revenue", value: "₹320.4K", trend: "+8.2%", trendTone: "text-emerald-600", progress: 78, progressTone: "bg-gray-800" },
-  { label: "Orders", value: "31.6K", trend: "+3.4%", trendTone: "text-emerald-600", progress: 64, progressTone: "bg-gray-600" },
-  { label: "Avg. Order Value", value: "₹4.2K", trend: "+₹0.12K", trendTone: "text-emerald-600", progress: 55, progressTone: "bg-gray-400" },
-  { label: "New Cust. Per Mo", value: "12.6K", trend: "+1.9K", trendTone: "text-emerald-600", progress: 82, progressTone: "bg-gray-800" },
+// 2. Donut Chart (Market Share / Categories)
+const categoryData = [
+  { name: "Electronics", value: 45000 },
+  { name: "Apparel", value: 32000 },
+  { name: "Home", value: 28000 },
+  { name: "Sports", value: 15000 },
 ];
 
-const funnelStages = [
-  { step: "Visitors", value: "256.2K", conversion: "50.4% to Activity" },
-  { step: "Product Views", value: "198.4K", conversion: "To cart initiation 32.1%" },
-  { step: "Add to Cart", value: "139.2K", conversion: "Cart conversion 24.2%" },
-  { step: "Check Out", value: "9.4K", conversion: "Checkout abandonment 6.4%" },
-  { step: "Complete Order", value: "5.9K", conversion: "Final conversion 3.8%" },
+// 3. Stacked Bar (Regional Sales by Channel)
+const regionalSalesData = [
+  { region: "North", Online: 4000, Retail: 2400, B2B: 2400 },
+  { region: "South", Online: 3000, Retail: 1398, B2B: 2210 },
+  { region: "East", Online: 2000, Retail: 9800, B2B: 2290 },
+  { region: "West", Online: 2780, Retail: 3908, B2B: 2000 },
 ];
 
-const lifetimeRevenueData = [
-  { month: "Jan", newCustomers: 120, returningCustomers: 80 },
-  { month: "Feb", newCustomers: 180, returningCustomers: 120 },
-  { month: "Mar", newCustomers: 260, returningCustomers: 190 },
-  { month: "Apr", newCustomers: 310, returningCustomers: 240 },
-  { month: "May", newCustomers: 370, returningCustomers: 280 },
-  { month: "Jun", newCustomers: 420, returningCustomers: 320 },
+// 4. Scatter Plot (Ad Spend vs Conversion)
+const scatterData = [
+  { x: 100, y: 200, z: 200 }, { x: 120, y: 100, z: 260 },
+  { x: 170, y: 300, z: 400 }, { x: 140, y: 250, z: 280 },
+  { x: 150, y: 400, z: 500 }, { x: 110, y: 280, z: 200 },
 ];
 
-const retentionMatrix = [
-  { month: "Jan", cohorts: ["100%", "88.7%", "82.1%", "74.5%", "68.0%", "61.4%"] },
-  { month: "Feb", cohorts: ["100%", "90.1%", "84.3%", "77.2%", "69.6%", "63.0%"] },
-  { month: "Mar", cohorts: ["100%", "91.2%", "85.7%", "79.9%", "73.1%", "67.8%"] },
-  { month: "Apr", cohorts: ["100%", "92.3%", "86.9%", "80.5%", "74.2%", "68.6%"] },
-  { month: "May", cohorts: ["100%", "89.9%", "83.6%", "77.4%", "70.8%", "65.5%"] },
-  { month: "Jun", cohorts: ["100%", "87.6%", "81.4%", "74.9%", "68.2%", "62.7%"] },
+// 5. Radar Chart (Team Skills)
+const skillData = [
+  { subject: 'Closing', A: 120, B: 110, fullMark: 150 },
+  { subject: 'Prospecting', A: 98, B: 130, fullMark: 150 },
+  { subject: 'Demo', A: 86, B: 130, fullMark: 150 },
+  { subject: 'Negotiation', A: 99, B: 100, fullMark: 150 },
+  { subject: 'Technical', A: 85, B: 90, fullMark: 150 },
+  { subject: 'Follow-up', A: 65, B: 85, fullMark: 150 },
 ];
 
-// Professional monochrome scale for retention heatmap
-const retentionBgMap = (valueStr) => {
-  const val = parseFloat(valueStr);
-  if (val >= 100) return "bg-[#2B2B2B] text-white"; // Darkest
-  if (val >= 90) return "bg-[#525252] text-white";
-  if (val >= 80) return "bg-[#737373] text-white";
-  if (val >= 70) return "bg-[#A3A3A3] text-black";
-  if (val >= 60) return "bg-[#D4D4D4] text-black";
-  return "bg-[#E5E5E5] text-black"; // Lightest
-};
-
-const areaData = [
-  { name: "Step 1", value: 100 },
-  { name: "Step 2", value: 78 },
-  { name: "Step 3", value: 52 },
-  { name: "Step 4", value: 28 },
-  { name: "Step 5", value: 16 },
+// 6. Waterfall Data (Net Profit Walk)
+const waterfallData = [
+  { name: 'Gross Rev', uv: 4000, pv: 2400, amt: 2400 },
+  { name: 'Cost of Goods', uv: -1500, pv: 1398, amt: 2210 },
+  { name: 'Marketing', uv: -800, pv: 9800, amt: 2290 },
+  { name: 'Ops', uv: -400, pv: 3908, amt: 2000 },
+  { name: 'Net Profit', uv: 1300, pv: 4800, amt: 2181 },
 ];
 
-const kpiCards = [
+// 7. Treemap Data (Product Hierarchy)
+const treeMapData = [
   {
-    title: "Conversion Rate",
-    value: "3.8%",
-    helper: "+0.6pp vs last month",
-    badge: "Healthy",
-    badgeTone: "bg-green-100 text-green-800 border border-green-200",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 3.75 4.5 12h6l-3.75 8.25L19.5 12h-6l3.75-8.25-5.25 6" />
-      </svg>
-    ),
+    name: 'Electronics',
+    children: [
+      { name: 'Laptops', size: 12000 },
+      { name: 'Phones', size: 8500 },
+      { name: 'Accessories', size: 3000 },
+    ],
   },
   {
-    title: "Returning Customers",
-    value: "58%",
-    helper: "+4% QoQ",
-    badge: "Growing",
-    badgeTone: "bg-blue-100 text-blue-800 border border-blue-200",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75v10.5m0 0 3.75-3.75M12 17.25 8.25 13.5M18 12a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z" />
-      </svg>
-    ),
+    name: 'Clothing',
+    children: [
+      { name: 'Men', size: 7000 },
+      { name: 'Women', size: 15000 },
+    ],
   },
   {
-    title: "Average Basket",
-    value: "₹148.90",
-    helper: "+₹12 vs goal",
-    badge: "Above target",
-    badgeTone: "bg-gray-100 text-gray-800 border border-gray-200",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2.25l1.5 12.75A2.25 2.25 0 0 0 8.99 18h6.02a2.25 2.25 0 0 0 2.24-2.25L18.75 6H5.25" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 21a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM8.25 21a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
-      </svg>
-    ),
+    name: 'Home',
+    children: [
+      { name: 'Furniture', size: 5000 },
+      { name: 'Decor', size: 2000 },
+    ],
   },
 ];
 
-const actionItems = [
-  {
-    title: "Launch A/B test on checkout copy",
-    owner: "Growth Team",
-    due: "Due tomorrow",
-    tone: "border-l-4 border-[#2B2B2B] bg-white",
-  },
-  {
-    title: "Review VIP loyalty tier pricing",
-    owner: "Finance & CRM",
-    due: "Due Friday",
-    tone: "border-l-4 border-[#737373] bg-white",
-  },
-  {
-    title: "Enable referral bonus tracking",
-    owner: "Product Ops",
-    due: "In progress",
-    tone: "border-l-4 border-[#D4D4D4] bg-white",
-  },
+// 8. Gauge (Radial Bar) Data
+const gaugeData = [
+  { name: 'L1', value: 10, fill: '#E5E7EB' }, // Background ring
+  { name: 'Satisfaction', value: 82, fill: '#10B981' },
 ];
 
-const retentionLegend = [
-  { label: "95%+", tone: "bg-[#2B2B2B]" },
-  { label: "85-95%", tone: "bg-[#737373]" },
-  { label: "75-85%", tone: "bg-[#A3A3A3]" },
-  { label: "<75%", tone: "bg-[#D4D4D4]" },
+// 9. Funnel Data
+const funnelData = [
+  { name: "Impressions", value: 1000 },
+  { name: "Clicks", value: 750 },
+  { name: "Visits", value: 500 },
+  { name: "Add to Cart", value: 250 },
+  { name: "Purchases", value: 100 },
 ];
 
-export default function App() {
+// 10. Histogram (Order Value Distribution)
+const histogramData = [
+  { range: "0-50", count: 120 },
+  { range: "51-100", count: 350 },
+  { range: "101-150", count: 410 },
+  { range: "151-200", count: 280 },
+  { range: "200+", count: 150 },
+];
+
+// --- COMPONENTS ---
+
+const Card = ({ title, subtitle, children, className = "", action }) => (
+  <div className={`bg-white rounded-xl border border-gray-200 shadow-sm flex flex-col ${className}`}>
+    <div className="p-5 border-b border-gray-100 flex justify-between items-start">
+      <div>
+        <h3 className="font-bold text-gray-800 text-sm uppercase tracking-wider">{title}</h3>
+        {subtitle && <p className="text-xs text-gray-500 mt-1">{subtitle}</p>}
+      </div>
+      {action}
+    </div>
+    <div className="p-5 flex-grow relative">
+      {children}
+    </div>
+  </div>
+);
+
+const KpiCard = ({ title, value, trend, trendUp, icon: Icon }) => (
+  <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex items-start justify-between">
+    <div>
+      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{title}</p>
+      <h3 className="text-2xl font-bold text-gray-900 mt-2">{value}</h3>
+      <div className={`flex items-center mt-2 text-xs font-medium ${trendUp ? 'text-emerald-600' : 'text-red-600'}`}>
+        {trendUp ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
+        <span className="ml-1">{trend}</span>
+      </div>
+    </div>
+    <div className={`p-3 rounded-lg ${trendUp ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'}`}>
+      <Icon size={20} />
+    </div>
+  </div>
+);
+
+// Custom Gantt Chart (Since Recharts doesn't support this natively effectively)
+const SimpleGantt = () => {
+  const tasks = [
+    { name: "Q3 Marketing Campaign", start: 0, duration: 60, color: "bg-emerald-500" },
+    { name: "Website Redesign", start: 20, duration: 40, color: "bg-blue-500" },
+    { name: "New Product Launch", start: 45, duration: 30, color: "bg-purple-500" },
+    { name: "Holiday Sale Prep", start: 70, duration: 25, color: "bg-amber-500" },
+  ];
+
   return (
-    <div className="flex min-h-screen flex-col bg-gray-50 text-gray-900 font-sans">
-      <main className="flex grow">
-        <div className="flex w-full flex-col gap-8 px-4 py-8 sm:px-8 lg:px-12 xl:px-16 max-w-[1600px] mx-auto">
-          
-          {/* HEADER */}
-          <header className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between border-b border-gray-200 pb-6">
-            <div>
-              <h1 className="text-3xl font-bold text-[#2B2B2B] tracking-tight">Overview Dashboard</h1>
-              <p className="text-sm text-gray-500 mt-1">Sales overview · Jan 1, 2023 – Jun 30, 2023</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <button className="btn-neon-outline text-sm px-4 py-2 hover:bg-gray-100 border border-gray-300 rounded-md bg-white text-gray-700">
-                Last 6 months
-              </button>
-              <button className="btn-neon-primary text-sm px-4 py-2 shadow-md hover:shadow-lg rounded-md border border-[#2B2B2B] bg-[#2B2B2B] text-white">
-                Export Report
-              </button>
-            </div>
-          </header>
-
-          {/* KPI CARDS */}
-          <section className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {kpiCards.map((card) => (
-              <article
-                key={card.title}
-                className="relative overflow-hidden rounded-xl bg-white p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200"
-              >
-                <div className="relative flex items-start justify-between">
-                  <div className="rounded-lg bg-gray-50 p-3 border border-gray-100">
-                    {card.icon}
-                  </div>
-                  <span className={`rounded-full px-3 py-1 text-[0.65rem] font-bold uppercase tracking-wider ${card.badgeTone}`}>
-                    {card.badge}
-                  </span>
-                </div>
-                <h2 className="mt-6 text-xs font-bold uppercase tracking-widest text-gray-500">
-                  {card.title}
-                </h2>
-                <div className="flex items-baseline gap-3 mt-2">
-                  <p className="text-3xl font-bold text-[#2B2B2B]">{card.value}</p>
-                  <p className="text-sm font-medium text-emerald-600">{card.helper}</p>
-                </div>
-              </article>
-            ))}
-          </section>
-
-          {/* TOTAL SALES + SUMMARY */}
-          <section className="grid gap-6 lg:grid-cols-[2fr_1fr]">
-            {/* Main Chart Card */}
-            <article className="rounded-xl bg-white p-6 border border-gray-200 shadow-sm">
-              <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between mb-6">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-widest text-gray-400">Total Sales</p>
-                  <h2 className="mt-2 text-3xl font-bold text-[#2B2B2B]">₹895.39K</h2>
-                  <p className="text-xs text-gray-500 mt-1">last 30 days · <span className="text-emerald-600 font-medium">+12.5%</span> vs previous period</p>
-                </div>
-                <div className="mt-3 rounded-md bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-600 border border-gray-200">
-                  Jan 1, 2023 – Jun 30, 2023
-                </div>
-              </div>
-
-              <div className="mt-6 h-64">
-                <ResponsiveContainer>
-                  <BarChart data={topLineData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
-                    <CartesianGrid stroke={THEME.grid} strokeDasharray="3 3" vertical={false} />
-                    <XAxis 
-                      dataKey="month" 
-                      stroke="#9CA3AF" 
-                      tick={{ fill: "#6B7280", fontSize: 12 }} 
-                      axisLine={false} 
-                      tickLine={false} 
-                    />
-                    <YAxis 
-                      stroke="#9CA3AF" 
-                      tick={{ fill: "#6B7280", fontSize: 12 }} 
-                      tickFormatter={(value) => `₹${value}K`} 
-                      axisLine={false} 
-                      tickLine={false} 
-                    />
-                    <Tooltip
-                      cursor={{ fill: '#F3F4F6' }}
-                      contentStyle={{
-                        borderRadius: "8px",
-                        border: "1px solid #E5E7EB",
-                        backgroundColor: "#FFFFFF",
-                        color: "#111827",
-                        boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
-                      }}
-                    />
-                    <Bar 
-                      dataKey="totalSales" 
-                      name="Revenue" 
-                      fill={THEME.primary} 
-                      radius={[4, 4, 0, 0]} 
-                      barSize={40}
-                    />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </article>
-
-            {/* Summary Card */}
-            <article className="rounded-xl bg-white p-6 border border-gray-200 shadow-sm flex flex-col">
-              <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">Performance Summary</p>
-              
-              <div className="flex flex-col gap-4 grow">
-                {summaryStats.map((stat) => (
-                  <div key={stat.label} className="p-4 rounded-lg bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors">
-                    <div className="flex items-center justify-between mb-2">
-                      <p className="text-[0.65rem] font-bold uppercase tracking-wider text-gray-500">{stat.label}</p>
-                      <span className={`text-xs font-bold ${stat.trendTone}`}>{stat.trend}</span>
-                    </div>
-                    <div className="flex items-end justify-between">
-                      <p className="text-lg font-bold text-[#2B2B2B]">{stat.value}</p>
-                      <div className="w-16 h-1.5 rounded-full bg-gray-200 mb-2">
-                        <div className={`h-1.5 rounded-full ${stat.progressTone}`} style={{ width: `${stat.progress}%` }} />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </article>
-          </section>
-
-          {/* SALES FUNNEL + LTV */}
-          <section className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-            
-            {/* SALES FUNNEL */}
-            <article className="rounded-xl bg-white p-6 border border-gray-200 shadow-sm">
-              <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between mb-6">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-widest text-gray-400">Sales Funnel</p>
-                  <p className="text-xs text-gray-500 mt-1">Conversion health check</p>
-                </div>
-                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 border border-emerald-100">
-                    +4.8% completion
-                </span>
-              </div>
-
-              <div className="h-48 mb-6">
-                <ResponsiveContainer>
-                  <AreaChart data={areaData}>
-                    <defs>
-                      <linearGradient id="funnelGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor={THEME.primary} stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor={THEME.primary} stopOpacity={0.1}/>
-                      </linearGradient>
-                    </defs>
-                    <XAxis dataKey="name" hide />
-                    <YAxis hide />
-                    <Tooltip
-                       contentStyle={{
-                        borderRadius: "8px",
-                        border: "1px solid #E5E7EB",
-                        backgroundColor: "#FFFFFF",
-                        color: "#111827",
-                        boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
-                      }}
-                    />
-                    <Area 
-                      type="monotone" 
-                      dataKey="value" 
-                      stroke={THEME.primary} 
-                      fill="url(#funnelGradient)" 
-                      strokeWidth={2} 
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-5">
-                {funnelStages.map((stage) => (
-                  <div key={stage.step} className="flex flex-col gap-1 rounded-lg bg-gray-50 p-3 border border-gray-100">
-                    <p className="text-[0.6rem] font-bold uppercase tracking-wider text-gray-400 truncate">{stage.step}</p>
-                    <p className="text-sm font-bold text-[#2B2B2B]">{stage.value}</p>
-                    <p className="text-[0.6rem] text-gray-500 leading-tight">{stage.conversion}</p>
-                  </div>
-                ))}
-              </div>
-            </article>
-
-            {/* LIFETIME VALUE */}
-            <article className="rounded-xl bg-white p-6 border border-gray-200 shadow-sm">
-              <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between mb-6">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-widest text-gray-400">Lifetime Value</p>
-                  <p className="text-xs text-gray-500 mt-1">Customer cohort analysis</p>
-                </div>
-                <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700 border border-gray-200">
-                  +₹56K YoY
-                </span>
-              </div>
-
-              <div className="h-64">
-                <ResponsiveContainer>
-                  <LineChart data={lifetimeRevenueData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                    <CartesianGrid stroke={THEME.grid} strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="month" stroke="#9CA3AF" tick={{ fill: "#6B7280", fontSize: 12 }} axisLine={false} tickLine={false} />
-                    <YAxis stroke="#9CA3AF" tick={{ fill: "#6B7280", fontSize: 12 }} tickFormatter={(value) => `₹${value}K`} axisLine={false} tickLine={false} />
-                    <Tooltip
-                       contentStyle={{
-                        borderRadius: "8px",
-                        border: "1px solid #E5E7EB",
-                        backgroundColor: "#FFFFFF",
-                        color: "#111827",
-                        boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
-                      }}
-                    />
-                    <Legend verticalAlign="top" align="right" iconType="circle" wrapperStyle={{ paddingBottom: 20, fontSize: '12px' }} />
-
-                    <Line
-                      type="monotone"
-                      dataKey="newCustomers"
-                      stroke={THEME.primary} // Dark Charcoal
-                      strokeWidth={3}
-                      dot={{ r: 4, fill: THEME.primary, strokeWidth: 0 }}
-                      activeDot={{ r: 6 }}
-                      name="New"
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="returningCustomers"
-                      stroke={THEME.accent} // Light Gray
-                      strokeWidth={3}
-                      dot={{ r: 4, fill: THEME.accent, strokeWidth: 0 }}
-                      name="Returning"
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </article>
-          </section>
-
-          {/* RETENTION + ACTION CENTER */}
-          <section className="grid gap-6 lg:grid-cols-[2fr_1fr]">
-            {/* Retention Matrix */}
-            <article className="rounded-xl bg-white p-6 border border-gray-200 shadow-sm overflow-hidden">
-              <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between mb-6">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-widest text-gray-400">Customer Retention</p>
-                  <p className="text-xs text-gray-500 mt-1">Weekly cohort breakdown</p>
-                </div>
-                <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700 border border-gray-200">
-                  87% avg retention
-                </span>
-              </div>
-
-              <div className="overflow-x-auto">
-                <table className="min-w-full border-separate border-spacing-1">
-                  <thead>
-                    <tr>
-                      <th className="px-2 py-2 text-left text-xs font-bold uppercase tracking-wider text-gray-400">Month</th>
-                      {["W1", "W2", "W3", "W4", "W5", "W6"].map((label) => (
-                        <th key={label} className="px-2 py-2 text-center text-xs font-bold text-gray-400">
-                          {label}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {retentionMatrix.map((row) => (
-                      <tr key={row.month}>
-                        <td className="px-2 py-2 text-left text-xs font-bold text-gray-700">{row.month}</td>
-                        {row.cohorts.map((value, idx) => (
-                          <td key={`${row.month}-${idx}`} className="p-0 text-center">
-                            <div className={`mx-auto flex h-8 w-12 items-center justify-center rounded text-[0.65rem] font-medium ${retentionBgMap(value)}`}>
-                              {value}
-                            </div>
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="mt-6 flex flex-wrap gap-4 text-xs text-gray-500 justify-end border-t border-gray-100 pt-4">
-                {retentionLegend.map((item) => (
-                  <span key={item.label} className="inline-flex items-center gap-2">
-                    <span className={`h-3 w-3 rounded-sm ${item.tone}`} />
-                    {item.label}
-                  </span>
-                ))}
-              </div>
-            </article>
-
-            {/* Action Center */}
-            <article className="flex flex-col gap-4 rounded-xl bg-white p-6 border border-gray-200 shadow-sm">
-              <div className="flex items-center justify-between mb-2">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-widest text-gray-400">Action Center</p>
-                </div>
-                <span className="rounded-full bg-[#2B2B2B] px-2 py-1 text-[0.6rem] font-bold text-white">3 PENDING</span>
-              </div>
-
-              <ul className="space-y-3 grow">
-                {actionItems.map((item) => (
-                  <li
-                    key={item.title}
-                    className={`rounded-lg px-4 py-4 shadow-sm border border-gray-100 ${item.tone} hover:shadow-md transition-shadow`}
-                  >
-                    <p className="text-sm font-semibold text-[#2B2B2B]">{item.title}</p>
-                    <div className="mt-2 flex items-center justify-between text-[0.65rem] font-bold uppercase tracking-wider text-gray-400">
-                      <span>{item.owner}</span>
-                      <span>{item.due}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-
-              <button className="mt-4 w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm font-bold text-[#2B2B2B] hover:bg-gray-50 transition-colors">
-                View Roadmap
-              </button>
-            </article>
-          </section>
+    <div className="flex flex-col h-full justify-center space-y-4">
+      {tasks.map((task, idx) => (
+        <div key={idx} className="relative">
+          <div className="flex justify-between text-xs mb-1 text-gray-600 font-medium">
+            <span>{task.name}</span>
+          </div>
+          <div className="w-full bg-gray-100 rounded-full h-3 relative overflow-hidden">
+            <div 
+              className={`absolute h-full rounded-full ${task.color} opacity-80`} 
+              style={{ left: `${task.start}%`, width: `${task.duration}%` }}
+            />
+          </div>
         </div>
+      ))}
+      <div className="flex justify-between text-[10px] text-gray-400 mt-2 border-t border-gray-100 pt-2">
+        <span>Week 1</span>
+        <span>Week 4</span>
+        <span>Week 8</span>
+        <span>Week 12</span>
+      </div>
+    </div>
+  );
+};
+
+export default function Dashboard() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const onPieEnter = (_, index) => {
+    setActiveIndex(index);
+  };
+
+  // Custom render for Waterfall Bar colors
+  const getWaterfallColor = (val) => {
+    if (val.name === "Net Profit" || val.name === "Gross Rev") return THEME.colors[2];
+    return val.uv < 0 ? THEME.danger : THEME.accent;
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans pb-12">
+      {/* TOP NAVIGATION */}
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
+        
+            
+              <Layers className="text-white h-5 w-5" />
+            
+            <h1 className="text-xl font-bold text-gray-900 tracking-tight"><span className="text-gray-400"></span></h1>
+          
+          
+      </header>
+
+      <main className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        {/* ROW 1: KPI OVERVIEW (GAUGE + CARDS) */}
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <KpiCard title="Total Revenue" value="$892,300" trend="12.5%" trendUp={true} icon={DollarSign} />
+          <KpiCard title="Active Users" value="34,200" trend="3.2%" trendUp={true} icon={Users} />
+          <KpiCard title="Avg Order Value" value="$145.20" trend="0.8%" trendUp={false} icon={ShoppingBag} />
+          
+          {/* Custom Gauge Card */}
+          <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between relative overflow-hidden">
+             <div className="z-10">
+               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Customer Health</p>
+               <h3 className="text-2xl font-bold text-gray-900 mt-1">82/100</h3>
+               <p className="text-xs text-emerald-600 font-medium mt-1">Excellent</p>
+             </div>
+             <div className="h-24 w-24 -mr-2">
+               <ResponsiveContainer width="100%" height="100%">
+                 <RadialBarChart cx="50%" cy="50%" innerRadius="60%" outerRadius="100%" barSize={10} data={gaugeData} startAngle={180} endAngle={0}>
+                   <RadialBar minAngle={15} background clockWise dataKey="value" cornerRadius={10} />
+                 </RadialBarChart>
+               </ResponsiveContainer>
+             </div>
+          </div>
+        </section>
+
+        {/* ROW 2: MAIN TRENDS (BAR + DONUT) */}
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[400px]">
+          {/* REVENUE VS TARGET (BAR CHART) */}
+          <Card title="Revenue Performance" subtitle="Actual vs Target Monthly Revenue" className="lg:col-span-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={revenueData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
+                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 12}} />
+                <YAxis axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 12}} />
+                <Tooltip 
+                  cursor={{fill: '#F9FAFB'}}
+                  contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
+                />
+                <Legend wrapperStyle={{ paddingTop: '20px' }} />
+                <Bar dataKey="revenue" name="Actual Revenue" fill={THEME.primary} radius={[4, 4, 0, 0]} barSize={30} />
+                <Bar dataKey="target" name="Target" fill="#E5E7EB" radius={[4, 4, 0, 0]} barSize={30} />
+              </BarChart>
+            </ResponsiveContainer>
+          </Card>
+
+          {/* SALES BY CATEGORY (DONUT CHART) */}
+          <Card title="Sales Distribution" subtitle="Revenue share by category">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={categoryData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={80}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {categoryData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={THEME.colors[index % THEME.colors.length]} />
+                  ))}
+                </Pie>
+                <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }} />
+                <Legend verticalAlign="bottom" height={36} iconType="circle" />
+              </PieChart>
+            </ResponsiveContainer>
+          </Card>
+        </section>
+
+        {/* ROW 3: DEEP DIVE (SCATTER + RADAR + HISTOGRAM) */}
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[350px]">
+          {/* AD SPEND CORRELATION (SCATTER) */}
+          <Card title="Marketing Efficiency" subtitle="Ad Spend (X) vs Conversions (Y)">
+            <ResponsiveContainer width="100%" height="100%">
+              <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" />
+                <XAxis type="number" dataKey="x" name="Spend" unit="$" axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 10}} />
+                <YAxis type="number" dataKey="y" name="Conversions" unit="" axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 10}} />
+                <Tooltip cursor={{ strokeDasharray: '3 3' }} contentStyle={{ borderRadius: '8px' }} />
+                <Scatter name="Campaigns" data={scatterData} fill={THEME.accent}>
+                  {scatterData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={THEME.colors[index % THEME.colors.length]} />
+                  ))}
+                </Scatter>
+              </ScatterChart>
+            </ResponsiveContainer>
+          </Card>
+
+          {/* TEAM SKILLS (RADAR) */}
+          <Card title="Team Performance" subtitle="Skill assessment matrix">
+            <ResponsiveContainer width="100%" height="100%">
+              <RadarChart cx="50%" cy="50%" outerRadius="70%" data={skillData}>
+                <PolarGrid stroke="#E5E7EB" />
+                <PolarAngleAxis dataKey="subject" tick={{ fill: '#6B7280', fontSize: 10 }} />
+                <PolarRadiusAxis angle={30} domain={[0, 150]} tick={false} axisLine={false} />
+                <Radar name="Team A" dataKey="A" stroke={THEME.primary} fill={THEME.primary} fillOpacity={0.3} />
+                <Radar name="Team B" dataKey="B" stroke={THEME.accent} fill={THEME.accent} fillOpacity={0.3} />
+                <Legend iconType="circle" wrapperStyle={{ fontSize: '12px' }} />
+                <Tooltip contentStyle={{ borderRadius: '8px' }} />
+              </RadarChart>
+            </ResponsiveContainer>
+          </Card>
+
+          {/* ORDER VALUE DISTRIBUTION (HISTOGRAM) */}
+          <Card title="Order Value Dist." subtitle="Frequency of order sizes">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={histogramData} barCategoryGap={1}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
+                <XAxis dataKey="range" axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 10}} />
+                <YAxis axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 10}} />
+                <Tooltip contentStyle={{ borderRadius: '8px' }} />
+                <Bar dataKey="count" fill={THEME.secondary} radius={[2, 2, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </Card>
+        </section>
+
+        {/* ROW 4: COMPLEX ANALYSIS (WATERFALL + TREEMAP + STACKED BAR) */}
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[400px]">
+          
+          {/* PROFIT WALK (WATERFALL - SIMULATED) */}
+          <Card title="Net Profit Walk" subtitle="Cumulative financial breakdown">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={waterfallData}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 10}} />
+                <YAxis axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 10}} />
+                <Tooltip contentStyle={{ borderRadius: '8px' }} />
+                <Bar dataKey="uv" fill="#8884d8">
+                  {waterfallData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={getWaterfallColor(entry)} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </Card>
+
+          {/* REGIONAL CHANNEL MIX (STACKED BAR) */}
+          <Card title="Regional Channels" subtitle="Sales by region & channel">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={regionalSalesData} layout="vertical" margin={{ left: 20 }}>
+                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#F3F4F6" />
+                <XAxis type="number" axisLine={false} tickLine={false} hide />
+                <YAxis dataKey="region" type="category" axisLine={false} tickLine={false} tick={{fill: '#4B5563', fontSize: 12, fontWeight: 600}} width={40} />
+                <Tooltip contentStyle={{ borderRadius: '8px' }} />
+                <Legend iconType="circle" wrapperStyle={{ fontSize: '12px' }} />
+                <Bar dataKey="Online" stackId="a" fill={THEME.primary} barSize={20} />
+                <Bar dataKey="Retail" stackId="a" fill={THEME.secondary} barSize={20} />
+                <Bar dataKey="B2B" stackId="a" fill={THEME.accent} radius={[0, 4, 4, 0]} barSize={20} />
+              </BarChart>
+            </ResponsiveContainer>
+          </Card>
+
+          {/* PRODUCT HIERARCHY (TREEMAP) */}
+          <Card title="Inventory Value" subtitle="Size by revenue contribution">
+            <ResponsiveContainer width="100%" height="100%">
+              <Treemap
+                data={treeMapData}
+                dataKey="size"
+                aspectRatio={4 / 3}
+                stroke="#fff"
+                fill={THEME.primary}
+              >
+                 <Tooltip contentStyle={{ borderRadius: '8px' }} />
+              </Treemap>
+            </ResponsiveContainer>
+          </Card>
+        </section>
+
+        {/* ROW 5: PIPELINE & TIMELINE (FUNNEL + GANTT) */}
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[300px]">
+           
+           {/* FUNNEL ANALYSIS (AREA CHART SIMULATION) */}
+           <Card title="Conversion Funnel" subtitle="Visitor to Purchase Pipeline">
+             <ResponsiveContainer width="100%" height="100%">
+               <AreaChart data={funnelData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="colorFunnel" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={THEME.accent} stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor={THEME.accent} stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 12}} />
+                  <YAxis axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 12}} />
+                  <Tooltip contentStyle={{ borderRadius: '8px' }} />
+                  <Area type="monotone" dataKey="value" stroke={THEME.accent} fillOpacity={1} fill="url(#colorFunnel)" />
+               </AreaChart>
+             </ResponsiveContainer>
+           </Card>
+
+           {/* PROJECT ROADMAP (CUSTOM GANTT) */}
+           <Card title="Strategic Roadmap" subtitle="Q3-Q4 Key Initiatives">
+              <SimpleGantt />
+           </Card>
+
+        </section>
       </main>
     </div>
   );
